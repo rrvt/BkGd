@@ -1,0 +1,34 @@
+//{{NO_DEPENDENCIES}}
+// Microsoft Visual C++ generated include file.
+// Used by BkGd.rc
+//
+#define IDD_AboutBox          0x0010
+#define IDR_MAINFRAME         100
+#define IDD_DIALOG1           103
+#define IDD_Interval          103
+
+#define IDC_Interval          206
+
+#define ID_SelectRootPath     400
+#define ID_SetInterval        401
+#define ID_GetCurrent         402
+#define ID_SetMode            403
+#define ID_StopWallPaper      404
+#define ID_Help               405
+
+#define IDM_ABOUT             200               // Messages
+#define IDM_Initialize        201
+#define IDM_Mode              202
+#define IDM_EXIT              205
+
+
+// Next default values for new objects
+//
+#ifdef APSTUDIO_INVOKED
+#ifndef APSTUDIO_READONLY_SYMBOLS
+#define _APS_NEXT_RESOURCE_VALUE  105
+#define _APS_NEXT_COMMAND_VALUE   406
+#define _APS_NEXT_CONTROL_VALUE   207
+#define _APS_NEXT_SYMED_VALUE     300
+#endif
+#endif
