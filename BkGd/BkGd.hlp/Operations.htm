@@ -26,60 +26,74 @@ This application is composed of two processes:
 <li>BkGdEx -- The Wallpaper Changer Process, it begins running at login or when BkGd sends a command</li>
 </ul>
 </p>
-
-<h2><img src="Images/Eye.jpg" width="16" height="15"> Get Current Wallpaper Picture Path</h2>
+<h2>Tool Bar Commands</h2>
+<h3><img src="Images/Eye.jpg" width="16" height="15"> Get Current Wallpaper Picture Path</h3>
 <p>
-Displays the path of the current picture used as wallpaper and copies it to the clip board (useful for 
+Displays the path of the current picture used as wallpaper and copies it to the clip board (useful for
 pasting the path into a file manaager or text editor).
 </p>
 
-<h2>
-  <img src="Images/FileTree.jpg" width="16" height="15" alt="FileTree"> 
+<h3>
+  <img src="Images/FileTree.jpg" width="16" height="15" alt="FileTree">
   Select Root Picture Directory
-</h2>
+</h3>
 <p>A Directory Dialog Box is presented to the user.  The resulting path is presented to the Wallpaper
 changer (starting it if necessary).
 </p>
 
-<h2><img src="Images/ElapsedTime.jpg" width="16" height="15"> Select Interval</h2>
+<h3><img src="Images/ElapsedTime.jpg" width="16" height="15"> Select Interval</h3>
 <p>
 A dialog box is presented to the user in which to supply the number of minutes to wait before changing
 the wallpaper.  The resulting value is presented to the wallpaper changer (starting it if necessary).
 </p>
 
-<h2><img src="Images/Mode.jpg" width="16" height="15"> Toggle Selection Mode</h2>
+<h3><img src="Images/Mode.jpg" width="16" height="15"> Toggle Selection Mode</h3>
 <p>
-There are two modes, random selection of picture to use for the wallpaper and 
+There are two modes, random selection of picture to use for the wallpaper and
 linear selection of the next picture to use for the wallpaper.  This command toggles between the two modes
 and notifies the Wallpaper Changer that the mode has changed.
 </p>
 
-<h2><img src="Images/Printer.jpg" width="16" height="15"> Print</h2>
+<h3><img src="Images/Printer.jpg" width="16" height="15"> Print</h3>
 <p>
 Will do all the normal things to print the content of the window.
 </p>
 
-<h2><img src="Images/Options.jpg" width="16" height="15"> Options</h2>
+<h3><img src="Images/Options.jpg" width="16" height="15"> Options</h3>
 <p>
 The options dialog allows specifying the Display and Printer Font Size Scale Factor, the printer
 orientation and the printer margins.
 </p>
 
-<h2><img src="Images/StopOther.jpg" width="16" height="15"> Stop Changing the Wallpaper</h2>
+<h3><img src="Images/StopOther.jpg" width="16" height="15"> Stop Changing the Wallpaper</h3>
 <p>
 Kill the wallpaper changer process (effectively stopping the changing of the wallpaper).
 </p>
 
-<h2><img src="Images/About.jpg" width="16" height="15"> About</h2>
+<h3><img src="Images/About.jpg" width="16" height="15"> About</h3>
 <p>
 Displays the About Box.  The about box uses text from the resource file (TestApp.rc) for
 the output information.  There is a standard about box dialog in the Library.
 </p>
 
-<h2><img src="Images/Exit.jpg" width="16" height="15"> Exit</h2>
+<h3><img src="Images/Exit.jpg" width="16" height="15"> Exit</h3>
 <p>
 Exit the application with no reservations.  Does not stop the wallpaper changer.
 </p>
+
+<h2>Menu Commands</h2>
+<h3>File Menu</h3>
+<h4>Get Current Path</h4>
+<h4>Select Root Path</h4>
+<h4>Set Interval</h4>
+<h4>Set Mode</h4>
+<h4>Stop Wall Paper Changer</h4>
+<h3>Tools</h3>
+<h4>Options</h4>
+<h4>Enable Wallpaper Process</h4>
+<p>Enables the Wallpaper process to run at login and starts it.</p>
+<h4>Disable Wallpaper Process</h4>
+<p>Stops the Wallpaper process and prevents the process from running at login.</p>
 <!-- InstanceEndEditable -->
 </div><!-- end .content -->
 </div><!-- end .container -->

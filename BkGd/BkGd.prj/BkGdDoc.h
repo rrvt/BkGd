@@ -3,16 +3,22 @@
 
 #pragma once
 #include "CDoc.h"
+#include "IniFile.h"
 #include "Resource.h"
 
 
 enum DataSource {NotePadSrc};
 
 
+extern TCchar* Section;
+extern TCchar* EnabledKey;
+
+
 class BkGdDoc : public CDoc {
 
 DECLARE_DYNCREATE(BkGdDoc)
 
+bool        enabled;                // BkGdEx enabled when true
 HWND        bkGdEx;
 String      path;
 int         interval;
@@ -49,6 +55,8 @@ private:
   bool getMode();
   void showMode(bool mode);
 
+  void setEnabled(bool v) {enabled = v; iniFile.writeInt(Section, EnabledKey, enabled);}
+
   void sendCommand(int cmd = IDM_Initialize);
   HWND findBkGdEx(bool restart = true);
   bool startBkGdEx();
@@ -71,7 +79,8 @@ public:
   afx_msg void onGetCurrent();
   afx_msg void onSetMode();
   afx_msg void onStopWallPaper();
-
+  afx_msg void OnEnableBkGdEx();
+  afx_msg void onDisableBkGdEx();
   afx_msg void OnOptions();
   };
 

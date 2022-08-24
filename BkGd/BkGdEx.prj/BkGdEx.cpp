@@ -13,83 +13,51 @@
 // Global Variables:
 
 static HINSTANCE hInst;                                    // current instance
-static WCHAR     szTitle[MAX_LOADSTRING];                  // The title bar text
-static WCHAR     szWindowClass[MAX_LOADSTRING];            // the main window class name
-
 static String    path;
 static uint      timerID;
 
 
-// Forward declarations of functions included in this code module:
+// Function declarations
 
-static ATOM             MyRegisterClass(HINSTANCE hInstance);
-static BOOL             InitInstance(HINSTANCE, int);
+static ATOM             MyRegisterClass(String& wdwClass);
+static BOOL             InitInstance(int nCmdShow);
+static void             getTitle(String& title);
 static void             initialize();
 static LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 static INT_PTR CALLBACK About(HWND, UINT, WPARAM, LPARAM);
 static VOID    CALLBACK timerProc(HWND hWnd, uint nmsg, uint nIDEvent, DWORD dwTime);
 
 
+// Starting Point
+
 int APIENTRY wWinMain(_In_     HINSTANCE hInstance,
                       _In_opt_ HINSTANCE hPrevInstance,
                       _In_     LPWSTR    lpCmdLine,
                       _In_     int       nCmdShow) {
+HACCEL hAccelTable;
+MSG    msg;
 
-  // Initialize global strings
-
-  LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
-  LoadStringW(hInstance, IDC_BKGDEX, szWindowClass, MAX_LOADSTRING);
-
-  MyRegisterClass(hInstance);
-
-  // Perform application initialization:
-
-  if (!InitInstance(hInstance, nCmdShow)) return FALSE;
-
-  HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_BKGDEX));
+  hInst = hInstance;                                  // Store instance handle in our global variable
 
   iniFile.getAppDataPath(_T("BkGd"));
+  if (!iniFile.readInt(Section, EnabledKey, 0)) return 0;
+
+  if (!InitInstance(nCmdShow)) return FALSE;          // Perform application initialization:
+
+  hAccelTable = LoadAccelerators(hInst, MAKEINTRESOURCE(IDC_BKGDEX));
 
   initialize();
 
   if (!timerID) return 1;
 
-  MSG msg;
-
   // Main message loop:
   while (GetMessage(&msg, nullptr, 0, 0)) {
 
-    if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg)) {
-      TranslateMessage(&msg);
-      DispatchMessage(&msg);
-      }
+    if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+                                                          {TranslateMessage(&msg); DispatchMessage(&msg);}
     }
 
   return (int) msg.wParam;
-  }
-
-
-//  FUNCTION: MyRegisterClass()
-//  PURPOSE: Registers the window class.
-
-ATOM MyRegisterClass(HINSTANCE hInstance) {
-WNDCLASSEXW wcex;
-
-  wcex.cbSize = sizeof(WNDCLASSEX);
-
-  wcex.style          = CS_HREDRAW | CS_VREDRAW;
-  wcex.lpfnWndProc    = WndProc;
-  wcex.cbClsExtra     = 0;
-  wcex.cbWndExtra     = 0;
-  wcex.hInstance      = hInstance;
-  wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_BKGDEX));
-  wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
-  wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-  wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_BKGDEX);
-  wcex.lpszClassName  = szWindowClass;
-  wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
-
-  return RegisterClassExW(&wcex);
   }
 
 
@@ -99,14 +67,56 @@ WNDCLASSEXW wcex;
 //        In this function, we save the instance handle in a global variable and
 //        create and display the main program window.
 
-BOOL InitInstance(HINSTANCE hInstance, int nCmdShow) {
-  hInst = hInstance;                    // Store instance handle in our global variable
+BOOL InitInstance(int nCmdShow) {
+String title;
+String wdwClass;
 
-  HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-                           CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, HWND_MESSAGE, nullptr, hInstance, nullptr);
+  MyRegisterClass(wdwClass);
+
+  getTitle(title);
+
+  HWND hWnd = CreateWindowW(wdwClass, title, WS_OVERLAPPEDWINDOW,
+                           CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, HWND_MESSAGE, nullptr, hInst, nullptr);
   if (!hWnd) return FALSE;
 
   ShowWindow(hWnd, nCmdShow);   UpdateWindow(hWnd);   return TRUE;
+  }
+
+
+//  FUNCTION: MyRegisterClass()
+//  PURPOSE: Registers the window class.
+
+ATOM MyRegisterClass(String& wdwClass) {
+WNDCLASSEX wcex;
+Tchar       szWindowClass[MAX_LOADSTRING];                    // the main window class name
+
+  LoadStringW(hInst, IDC_BKGDEX, szWindowClass, MAX_LOADSTRING);   wdwClass = szWindowClass;
+
+  wcex.cbSize         = sizeof(WNDCLASSEX);
+  wcex.style          = CS_HREDRAW | CS_VREDRAW;
+  wcex.lpfnWndProc    = WndProc;
+  wcex.cbClsExtra     = 0;
+  wcex.cbWndExtra     = 0;
+  wcex.hInstance      = hInst;
+  wcex.hIcon          = LoadIcon(hInst, MAKEINTRESOURCE(IDI_BKGDEX));
+  wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
+  wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
+  wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_BKGDEX);
+  wcex.lpszClassName  = wdwClass;                           //szWindowClass;
+  wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
+
+  return RegisterClassEx(&wcex);
+  }
+
+
+void getTitle(String& title) {
+Tchar  heading[MAX_LOADSTRING];
+Tchar  buf[UNLEN+1];
+DWORD  len = noElements(buf);
+
+  LoadStringW(hInst, IDS_APP_TITLE, heading, MAX_LOADSTRING);
+
+  if (GetUserName(buf, &len)) {title = buf; title += _T(' ');}   title += heading;
   }
 
 

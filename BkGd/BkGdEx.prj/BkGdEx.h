@@ -5,3 +5,4 @@
 extern TCchar* Section;
 extern TCchar* WallPaperKey;
 extern TCchar* IntervalKey;
+extern TCchar* EnabledKey;

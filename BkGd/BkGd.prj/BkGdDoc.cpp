@@ -8,7 +8,6 @@
 #include "ExtraResource.h"
 #include "filename.h"
 #include "GetPathDlg.h"
-#include "IniFile.h"
 #include "IntervalDlg.h"
 #include "LoadClipBoard.h"
 #include "MessageBox.h"
@@ -18,9 +17,10 @@
 
 
 static TCchar* BkGdTitle    = _T("BkGdEx -- MessageHandler");
-static TCchar* Section      = _T("Global");
+       TCchar* Section      = _T("Global");
 static TCchar* WallPaperKey = _T("WallPaperPath");
 static TCchar* IntervalKey  = _T("Interval");
+       TCchar* EnabledKey   = _T("Enabled");
 static TCchar* ModeKey      = _T("Mode");
 static TCchar* CurrentKey   = _T("CurrentPath");
 
@@ -30,19 +30,24 @@ static TCchar* CurrentKey   = _T("CurrentPath");
 IMPLEMENT_DYNCREATE(BkGdDoc, CDoc)
 
 BEGIN_MESSAGE_MAP(BkGdDoc, CDoc)
+
   ON_COMMAND(ID_GetCurrent,     &onGetCurrent)
   ON_COMMAND(ID_SelectRootPath, &onSelectRootPath)
   ON_COMMAND(ID_SetInterval,    &onSetInterval)
   ON_COMMAND(ID_SetMode,        &onSetMode)
   ON_COMMAND(ID_Options,        &OnOptions)
   ON_COMMAND(ID_StopWallPaper,  &onStopWallPaper)
+  ON_COMMAND(ID_EnableBkGdEx,   &OnEnableBkGdEx)
+  ON_COMMAND(ID_DisableBkGdEx,  &onDisableBkGdEx)
 
 END_MESSAGE_MAP()
 
 
 // BkGdDoc construction/destruction
 
-BkGdDoc::BkGdDoc() noexcept : bkGdEx(0), dataSource(NotePadSrc) { }
+BkGdDoc::BkGdDoc() noexcept : bkGdEx(0), dataSource(NotePadSrc) {
+  enabled = iniFile.readInt(Section, EnabledKey, 0);
+  }
 
 
 BkGdDoc::~BkGdDoc() { }
@@ -58,7 +63,11 @@ int    intvl;
 
   intvl = getInterval();  notePad << _T("Change interval is ") << intvl << _T(" Min") << nCrlf;
 
-  showMode(getMode());    display(NotePadSrc);
+  showMode(getMode());
+
+  if (!enabled) notePad << _T("Wallpaper changer is not enabled") << nCrlf;
+
+  display(NotePadSrc);
   }
 
 
@@ -76,19 +85,11 @@ String s;
 
 void BkGdDoc::onSelectRootPath() {
 
-#if 1
   getRootPath(path);
-#else
-  iniFile.readString(Section, WallPaperKey, path);
-#endif
 
   if (getDirPathDlg(_T("Wallpaper Root Path"), path))
                                                     {iniFile.writeString(Section, WallPaperKey, path);}
-#if 1
   showRootPath(path);
-#else
-  notePad << _T("Wallpaper Files Root Path: ") << path << nCrlf;
-#endif
 
   sendCommand();   display(NotePadSrc);
   }
@@ -143,6 +144,9 @@ void BkGdDoc::showMode(bool mode) {
   }
 
 
+void BkGdDoc::OnEnableBkGdEx()  {setEnabled(true);   findBkGdEx();}
+void BkGdDoc::onDisableBkGdEx() {onStopWallPaper();  setEnabled(false);}
+
 
 void BkGdDoc::onStopWallPaper() {
 HWND hwnd = findBkGdEx(false);   if (!hwnd) return;
@@ -162,6 +166,8 @@ void BkGdDoc::sendCommand(int cmd) {
 HWND hwnd = findBkGdEx();  if (!hwnd) return;
 int  lastErr;
 
+  if (!enabled) notePad << _T("Wallpaper changer is not enabled") << nCrlf;
+
   if (PostMessage(hwnd, WM_COMMAND, cmd, 0)) return;
 
   lastErr = GetLastError();   notePad << _T("Last Error = ") << lastErr << nCrlf;   display(NotePadSrc);
@@ -169,8 +175,16 @@ int  lastErr;
 
 
 HWND BkGdDoc::findBkGdEx(bool restart) {
+Tchar  buf[UNLEN+1];
+DWORD  len = noElements(buf);
+String title;
+
+  if (!enabled) return 0;
+
+  if (GetUserName(buf, &len)) {title = buf; title += _T(' ');}   title += BkGdTitle;
+
   for (int i = 0; !bkGdEx && i < 2; i++)
-                {bkGdEx = FindWindow(0, BkGdTitle);   if (!bkGdEx && restart && !startBkGdEx()) break;}
+           {bkGdEx = FindWindow(0, title);   if (!bkGdEx && restart && !startBkGdEx()) break;}
 
   if (!bkGdEx) {notePad << _T("Wallpaper Changer is not running!") << nCrlf;   display(NotePadSrc);}
 
@@ -222,4 +236,17 @@ void BkGdDoc::serialize(Archive& ar) {
 void BkGdDoc::AssertValid()          const {CDocument::AssertValid();}
 void BkGdDoc::Dump(CDumpContext& dc) const {CDocument::Dump(dc);}
 #endif //_DEBUG
+
+
+
+
+
+#if 1
+#else
+  iniFile.readString(Section, WallPaperKey, path);
+#endif
+#if 1
+#else
+  notePad << _T("Wallpaper Files Root Path: ") << path << nCrlf;
+#endif
 

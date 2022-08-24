@@ -61,16 +61,16 @@
       <Optimization>MaxSpeed</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeaderFile/>
+      <PrecompiledHeaderFile />
       <AdditionalIncludeDirectories>
         $(ProjectDir);$(SolutionDir)..\..\Library\Library.prj\;$(SolutionDir)..\..\Library\Extras\;%(AdditionalIncludeDirectories)
       </AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <BasicRuntimeChecks/>
+      <BasicRuntimeChecks />
       <FunctionLevelLinking>false</FunctionLevelLinking>
-      <PrecompiledHeaderOutputFile/>
+      <PrecompiledHeaderOutputFile />
       <LanguageStandard>stdcpp20</LanguageStandard>
       <SupportJustMyCode>false</SupportJustMyCode>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
@@ -104,7 +104,7 @@
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeaderFile/>
+      <PrecompiledHeaderFile />
       <AdditionalIncludeDirectories>
         $(ProjectDir);$(SolutionDir)..\..\Library\Library.prj\;$(SolutionDir)..\..\Library\Extras\;%(AdditionalIncludeDirectories)
       </AdditionalIncludeDirectories>
@@ -114,8 +114,8 @@
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
       <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>
-      <PrecompiledHeaderOutputFile/>
-      <BasicRuntimeChecks/>
+      <PrecompiledHeaderOutputFile />
+      <BasicRuntimeChecks />
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
@@ -126,7 +126,7 @@
       <AdditionalDependencies>Htmlhelp.lib</AdditionalDependencies>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
-      <ProgramDatabaseFile/>
+      <ProgramDatabaseFile />
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -173,17 +173,16 @@
     <None Include="..\..\Library\Extras\Options.rc2" />
     <None Include="..\README.md" />
     <None Include="C:\Users\rrvt\AppData\Roaming\BkGd\BkGd.ini" />
-  <None Include="..\BkGd.wix\Example.wix" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="res\BkGd01.ico" />
-    <Image Include="res\ShortToolbar.bmp" />
-    <Image Include="res\Toolbar02.bmp" />
+    <None Include="..\BkGd.wix\Example.wix" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Library\Library.prj\Library.vcxproj">
       <Project>{CE3BEAD5-846B-41C2-BCE8-2C9F4703A568}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\BkGd.ico" />
+    <Image Include="res\Toolbar.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

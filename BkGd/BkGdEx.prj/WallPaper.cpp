@@ -11,6 +11,8 @@
 TCchar* Section      = _T("Global");
 TCchar* WallPaperKey = _T("WallPaperPath");
 TCchar* IntervalKey  = _T("Interval");
+TCchar* EnabledKey   = _T("Enabled");
+
 TCchar* CurrentKey   = _T("CurrentPath");
 TCchar* ModeKey      = _T("Mode");
 TCchar* IndexKey     = _T("Index");

@@ -15,6 +15,8 @@
 #define ID_SetMode            403
 #define ID_StopWallPaper      404
 #define ID_Help               405
+#define ID_EnableBkGdEx       406
+#define ID_DisableBkGdEx      407
 
 #define IDM_ABOUT             200               // Messages
 #define IDM_Initialize        201
@@ -27,7 +29,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE  105
-#define _APS_NEXT_COMMAND_VALUE   406
+#define _APS_NEXT_COMMAND_VALUE   408
 #define _APS_NEXT_CONTROL_VALUE   207
 #define _APS_NEXT_SYMED_VALUE     300
 #endif

@@ -92,15 +92,13 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="C:\Users\rrvt\AppData\Roaming\BkGd\BkGd.ini" />
+    <None Include="..\BkGd.wix\Example.wix" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\ShortToolbar.bmp">
+    <Image Include="res\BkGd.ico">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="res\BkGd01.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="res\Toolbar02.bmp">
+    <Image Include="res\Toolbar.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
