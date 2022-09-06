@@ -1,5 +1,4 @@
-
-
+// Wall Paper (Find them, Randomize them, Return them
 
 
 #include "framework.h"
@@ -100,7 +99,7 @@ String  s;
 
   Item& item = data[index];
 
-  iniFile.readString(Section, CurrentKey, s);    iniFile.writeString(Section, CurrentKey, s);
+  iniFile.readString(Section, CurrentKey, s);    iniFile.writeString(Section, LastKey, s);
 
   tc = item.s;   item.hit = true;   iniFile.writeString(Section, CurrentKey, tc);
 

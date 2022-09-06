@@ -78,7 +78,8 @@ The "HTML Help Workshop" (google it) must be installed on the PC.
 ### Update 9/5/22
 
 Corrected the initialization logic.  Added logic to ensure that all pictures are seen before showing a
-picture twice.
+picture twice.  Keeps track of the current and last picture.  The Get Current Path returns both paths
+and puts it in the clip board.
 
 ### Update 8/23/22
 

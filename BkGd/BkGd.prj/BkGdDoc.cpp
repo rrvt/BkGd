@@ -23,6 +23,7 @@ static TCchar* IntervalKey  = _T("Interval");
        TCchar* EnabledKey   = _T("Enabled");
 static TCchar* ModeKey      = _T("Mode");
 static TCchar* CurrentKey   = _T("CurrentPath");
+static TCchar* LastKey      = _T("LastPath");
 
 
 // BkGdDoc
@@ -75,11 +76,17 @@ void BkGdDoc::onGetCurrent() {getCurrent();   display(NotePadSrc);}
 
 
 void BkGdDoc::getCurrent() {
+String r;
 String s;
+String t;
 
-  iniFile.readString(Section, CurrentKey, s);   loadClipBoard(s);
+  iniFile.readString(Section, CurrentKey, r);
+  iniFile.readString(Section, LastKey,    s);
 
-  notePad << _T("Current Wallpaper Path (and in the Clip Board):  ") << s << nCrlf;
+  t = r + _T("\r\n") + s;   loadClipBoard(t);
+
+  notePad << _T("Current Wallpaper Path (and in the Clip Board):  ") << r << nCrlf;
+  notePad << _T("Last Wallpaper Path (and in the Clip Board):     ") << s << nCrlf;
   }
 
 
