@@ -7,7 +7,6 @@
 #define IDS_APP_TITLE     101             // String
 
 #define IDR_MAINFRAME     128             // Resource
-//#define IDD_BKGDEX_DIALOG 102
 #define IDD_ABOUTBOX      102
 #define IDI_BKGDEX        103             // Icons
 #define IDI_SMALL         104
@@ -18,7 +17,6 @@
 #define IDM_EXIT          205
 
 #define IDC_BKGDEX        300             // Control
-//#define IDC_MYICON          2
 
 #ifndef IDC_STATIC
 #define IDC_STATIC         -1

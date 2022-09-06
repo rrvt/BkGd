@@ -165,6 +165,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 void initialize() {
 int interval;
 
+  wallPaper.initialize();
+
   if (!iniFile.readString(Section, WallPaperKey, path) || !wallPaper.findAll(path)) return;
 
   wallPaper.set();

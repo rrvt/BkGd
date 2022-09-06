@@ -75,6 +75,11 @@ The "HTML Help Workshop" (google it) must be installed on the PC.
 
 ## Updates
 
+### Update 9/5/22
+
+Corrected the initialization logic.  Added logic to ensure that all pictures are seen before showing a
+picture twice.
+
 ### Update 8/23/22
 
 Add logic so that two users on the same machine may have different wallpaper changers running at the same

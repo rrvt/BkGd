@@ -14,17 +14,22 @@ TCchar* IntervalKey  = _T("Interval");
 TCchar* EnabledKey   = _T("Enabled");
 
 TCchar* CurrentKey   = _T("CurrentPath");
+TCchar* LastKey      = _T("LastPath");
 TCchar* ModeKey      = _T("Mode");
 TCchar* IndexKey     = _T("Index");
+TCchar* DebugKey     = _T("Debug");
 
 
 IniFile   iniFile;
 WallPaper wallPaper;
 
 
-WallPaper::WallPaper() {
+void WallPaper::initialize() {
+
   if (!iniFile.readString(Section, WallPaperKey, path)) return;
+
   index = iniFile.readInt(Section, IndexKey, 0);
+
   getMode();
   }
 
@@ -52,11 +57,10 @@ int                   n;
 void WallPaper::add(TCchar* path) {
 String ext = getExtension(path);
 
-  if (ext.lowerCase() == _T("png"))  {String s = path; data += s; return;}
-  if (ext.lowerCase() == _T("jpg"))  {String s = path; data += s; return;}
-  if (ext.lowerCase() == _T("jpeg")) {String s = path; data += s; return;}
-  if (ext.lowerCase() == _T("bmp"))  {String s = path; data += s; return;}
-  if (ext.lowerCase() == _T("tif"))  {String s = path; data += s; return;}
+  if (ext.lowerCase() == _T("jpg"))  {Item item; item.s = path; data += item; return;}
+  if (ext.lowerCase() == _T("jpeg")) {Item item; item.s = path; data += item; return;}
+  if (ext.lowerCase() == _T("bmp"))  {Item item; item.s = path; data += item; return;}
+  if (ext.lowerCase() == _T("tif"))  {Item item; item.s = path; data += item; return;}
 
   if (ext.lowerCase() == _T("crw"))  return;
   if (ext.lowerCase() == _T("thm"))  return;
@@ -79,14 +83,31 @@ void WallPaper::set() {SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, pick(), SPI
 
 void* WallPaper::pick() {
 TCchar* tc;
+int     n = nData();
+double  x = rand.next() * double(n) + 0.5;
+int     i = int(x);
+String  s;
 
-  index = mode ? int(rand.next() * float(nData())) : (index + 1) % nData();
-  tc = data[index];
+  index = mode ? i : index + 1;
 
-  iniFile.writeString(Section, CurrentKey, tc);
+  index %=  n;
+
+  for (i = 0; data[index].hit && i < n; i++)
+    index = (index + 1) % n;
+
+  if (i >= n)
+    for (i = 0; i < n; i++) data[i].hit = false;
+
+  Item& item = data[index];
+
+  iniFile.readString(Section, CurrentKey, s);    iniFile.writeString(Section, CurrentKey, s);
+
+  tc = item.s;   item.hit = true;   iniFile.writeString(Section, CurrentKey, tc);
 
   if (!mode) iniFile.writeInt(   Section, IndexKey,   index);
 
   return (void*) tc;
   }
+
+
 
