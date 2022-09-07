@@ -75,6 +75,10 @@ The "HTML Help Workshop" (google it) must be installed on the PC.
 
 ## Updates
 
+### Update 9/6/22
+
+Add command to display the next wallpaper image.
+
 ### Update 9/5/22
 
 Corrected the initialization logic.  Added logic to ensure that all pictures are seen before showing a

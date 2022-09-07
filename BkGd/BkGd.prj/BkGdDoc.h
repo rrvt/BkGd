@@ -57,7 +57,7 @@ private:
 
   void setEnabled(bool v) {enabled = v; iniFile.writeInt(Section, EnabledKey, enabled);}
 
-  void sendCommand(int cmd = IDM_Initialize);
+  void sendCommand(int cmd);
   HWND findBkGdEx(bool restart = true);
   bool startBkGdEx();
 
@@ -77,6 +77,7 @@ public:
   afx_msg void onSelectRootPath();
   afx_msg void onSetInterval();
   afx_msg void onGetCurrent();
+  afx_msg void onNext();
   afx_msg void onSetMode();
   afx_msg void onStopWallPaper();
   afx_msg void OnEnableBkGdEx();

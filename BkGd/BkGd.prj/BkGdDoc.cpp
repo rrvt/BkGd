@@ -33,6 +33,7 @@ IMPLEMENT_DYNCREATE(BkGdDoc, CDoc)
 BEGIN_MESSAGE_MAP(BkGdDoc, CDoc)
 
   ON_COMMAND(ID_GetCurrent,     &onGetCurrent)
+  ON_COMMAND(ID_Next,           &onNext)
   ON_COMMAND(ID_SelectRootPath, &onSelectRootPath)
   ON_COMMAND(ID_SetInterval,    &onSetInterval)
   ON_COMMAND(ID_SetMode,        &onSetMode)
@@ -90,15 +91,18 @@ String t;
   }
 
 
+void BkGdDoc::onNext() {sendCommand(IDM_Next);}
+
+
 void BkGdDoc::onSelectRootPath() {
 
   getRootPath(path);
 
-  if (getDirPathDlg(_T("Wallpaper Root Path"), path))
-                                                    {iniFile.writeString(Section, WallPaperKey, path);}
+  if (getDirPathDlg(_T("Wallpaper Root Path"), path)) {iniFile.writeString(Section, WallPaperKey, path);}
+
   showRootPath(path);
 
-  sendCommand();   display(NotePadSrc);
+  sendCommand(IDM_Initialize);   display(NotePadSrc);
   }
 
 
@@ -122,7 +126,7 @@ uint        pos;
 
   iniFile.writeInt(Section, IntervalKey, interval);
 
-  sendCommand();
+  sendCommand(IDM_Initialize);
   }
 
 

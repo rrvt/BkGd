@@ -12,15 +12,17 @@
 #define ID_SelectRootPath     400
 #define ID_SetInterval        401
 #define ID_GetCurrent         402
-#define ID_SetMode            403
-#define ID_StopWallPaper      404
-#define ID_Help               405
-#define ID_EnableBkGdEx       406
-#define ID_DisableBkGdEx      407
+#define ID_Next               403
+#define ID_SetMode            404
+#define ID_StopWallPaper      405
+#define ID_Help               406
+#define ID_EnableBkGdEx       407
+#define ID_DisableBkGdEx      408
 
 #define IDM_ABOUT             200               // Messages
 #define IDM_Initialize        201
-#define IDM_Mode              202
+#define IDM_Next              202
+#define IDM_Mode              203
 #define IDM_EXIT              205
 
 
@@ -29,7 +31,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE  105
-#define _APS_NEXT_COMMAND_VALUE   408
+#define _APS_NEXT_COMMAND_VALUE   410
 #define _APS_NEXT_CONTROL_VALUE   207
 #define _APS_NEXT_SYMED_VALUE     300
 #endif

@@ -13,7 +13,8 @@
 
 #define IDM_ABOUT         200             // Messages
 #define IDM_Initialize    201
-#define IDM_Mode          202
+#define IDM_Next          202
+#define IDM_Mode          203
 #define IDM_EXIT          205
 
 #define IDC_BKGDEX        300             // Control

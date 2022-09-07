@@ -23,6 +23,7 @@ static ATOM             MyRegisterClass(String& wdwClass);
 static BOOL             InitInstance(int nCmdShow);
 static void             getTitle(String& title);
 static void             initialize();
+static void             next();
 static LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 static INT_PTR CALLBACK About(HWND, UINT, WPARAM, LPARAM);
 static VOID    CALLBACK timerProc(HWND hWnd, uint nmsg, uint nIDEvent, DWORD dwTime);
@@ -137,6 +138,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 
                           case IDM_Initialize : KillTimer(NULL, timerID);   initialize(); break;
 
+                          case IDM_Next       : KillTimer(NULL, timerID);   next(); break;
+
                           case IDM_Mode       : wallPaper.getMode(); break;
 
                           case IDM_EXIT       : DestroyWindow(hWnd); break;
@@ -163,11 +166,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 
 
 void initialize() {
-int interval;
 
   wallPaper.initialize();
 
   if (!iniFile.readString(Section, WallPaperKey, path) || !wallPaper.findAll(path)) return;
+
+  next();
+  }
+
+
+void next() {
+int interval;
 
   wallPaper.set();
 
@@ -175,6 +184,7 @@ int interval;
 
   timerID = SetTimer(0, 0, interval * 60000, &timerProc);
   }
+
 
 
 // Message handler for about box.
