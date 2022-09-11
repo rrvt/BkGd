@@ -20,9 +20,25 @@ randomly or linerly selected.
 
 ## Installing
 
-Install the applications using the msi file.  However there are two additional steps.
+Install the applications using the msi file.  However there are three additional steps.
 
-Step 1 is to use the Windows Settings to allow a background picture to be used as wallpaper.
+This application is not "digitally signed" which makes it subject to being rejected by any and perhaps
+all virus checkers.  In particular Norton Security scans it an rejects it.  It must be given an
+exception.  Here are some steps that work in Norton Security:
+
+  - Open Norton Security
+  - Select Settings in Device Security
+  - Select "Antivirus" Setting
+  - Select "Scans and Risks" Tab
+  - Under Title "Exclusions/Low Risks" select "Items to Exclude from Scans" configure
+  - Choose "Add Files" Button
+  - Using the Open Folder button find "Program Files (x89)BkGd/BkGdEx.exe"
+  - Select the OK button.
+
+This should allow the startup executable to start when a person logs into the system.  Other virus
+protecting software will need to be suitably changed to exclude BkGdEx.exe.  Good Luck.
+
+Step 2 is to use the Windows Settings to allow a background picture to be used as wallpaper.
 The procedure is something like this:
 
   - Select "Settings"
@@ -31,7 +47,7 @@ The procedure is something like this:
   - Select "Picture" in the "Personalize your background" drop down menu
   - Select "Fit" in the "Choose a fit for your desktop image" drop down menu
 
-Step 2 is to enable the Wallpaper Changer, BkGdEx.  Here are those steps:
+Step 3 is to enable the Wallpaper Changer, BkGdEx.  Here are those steps:
 
   - Start BkGd application
   - Select the "Tool" drop down menu
@@ -74,6 +90,11 @@ Windows 11 or above.  visual Studio 2022 or above.  The WiX Toolset must be inst
 The "HTML Help Workshop" (google it) must be installed on the PC.
 
 ## Updates
+
+### Update 9/10/22
+
+Changed the Icon name in WixApp so that the startup executable is represented in the Win11
+Settings/App/Startup nicely.
 
 ### Update 9/6/22
 
