@@ -5,6 +5,7 @@
 #include "BkGdView.h"
 #include "BkGd.h"
 #include "BkGdDoc.h"
+#include "ClipLine.h"
 #include "Options.h"
 #include "Resources.h"
 
@@ -14,6 +15,11 @@
 IMPLEMENT_DYNCREATE(BkGdView, CScrView)
 
 BEGIN_MESSAGE_MAP(BkGdView, CScrView)
+  ON_WM_LBUTTONDOWN()
+  ON_WM_LBUTTONDBLCLK()
+
+  ON_WM_CONTEXTMENU()
+  ON_COMMAND(ID_Pup0, &onCopy)
 END_MESSAGE_MAP()
 
 
@@ -21,6 +27,12 @@ BkGdView::BkGdView() noexcept : dspNote( dMgr.getNotePad()), prtNote( pMgr.getNo
 ResourceData res;
 String       pn;
   if (res.getProductName(pn)) prtNote.setTitle(pn);
+
+  sub.LoadMenu(ID_PopupMenu);
+  menu.CreatePopupMenu();
+  menu.AppendMenu(MF_POPUP, (UINT_PTR) sub.GetSafeHmenu(), _T(""));        //
+
+  sub.Detach();
   }
 
 
@@ -100,6 +112,33 @@ void BkGdView::OnSetFocus(CWnd* pOldWnd) {
     case NotePadSrc : break;
     }
   }
+
+
+void BkGdView::OnLButtonDown(UINT nFlags, CPoint point)
+                        {clipLine.set(point);   invalidate();   CScrView::OnLButtonDown(nFlags, point);}
+
+
+void BkGdView::OnLButtonDblClk(UINT nFlags, CPoint point)
+  {clipLine.set(point);   RedrawWindow();   clipLine.load();   CScrView::OnLButtonDblClk(nFlags, point);}
+
+
+void BkGdView::OnContextMenu(CWnd* /*pWnd*/, CPoint point) {
+CRect  rect;
+CMenu* popup;
+CWnd*  pWndPopupOwner = this;
+
+  if (point.x == -1 && point.y == -1)
+            {GetClientRect(rect);  ClientToScreen(rect);  point = rect.TopLeft();  point.Offset(5, 5);}
+
+  popup = menu.GetSubMenu(0);   if (!popup) return;
+
+  while (pWndPopupOwner->GetStyle() & WS_CHILD) pWndPopupOwner = pWndPopupOwner->GetParent();
+
+  popup->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, point.x, point.y, this);
+  }
+
+
+void BkGdView::onCopy() {clipLine.load();  invalidate();}
 
 
 // BkGdView diagnostics

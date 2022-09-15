@@ -157,7 +157,9 @@ private:
 
   bool     textOut();                                 // fails when end of page and printing
   void     fragmentOut(String& s);
-  int      width(String& s);                          // returns CString and width in current units
+  void     dcOut(int hzPos, String& s);
+  void     clipTabInvert();
+  int      txtWidth(String& s);                          // returns CString and width in current units
   void     outError(TCchar* stg);
   void     setEndPage() {if (printing) vert.setEndPage();}
 

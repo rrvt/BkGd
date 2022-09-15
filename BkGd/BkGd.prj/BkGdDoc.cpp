@@ -5,11 +5,11 @@
 #include "BkGdDoc.h"
 #include "BkGd.h"
 #include "BkGdView.h"
+#include "ClipLine.h"
 #include "ExtraResource.h"
 #include "filename.h"
 #include "GetPathDlg.h"
 #include "IntervalDlg.h"
-#include "LoadClipBoard.h"
 #include "MessageBox.h"
 #include "NotePad.h"
 #include "Options.h"
@@ -41,6 +41,7 @@ BEGIN_MESSAGE_MAP(BkGdDoc, CDoc)
   ON_COMMAND(ID_StopWallPaper,  &onStopWallPaper)
   ON_COMMAND(ID_EnableBkGdEx,   &OnEnableBkGdEx)
   ON_COMMAND(ID_DisableBkGdEx,  &onDisableBkGdEx)
+  ON_COMMAND(ID_EDIT_COPY,      &onEditCopy)
 
 END_MESSAGE_MAP()
 
@@ -61,13 +62,13 @@ int    intvl;
 
   getRootPath(pth);   showRootPath(pth);
 
-  getCurrent();
-
   intvl = getInterval();  notePad << _T("Change interval is ") << intvl << _T(" Min") << nCrlf;
 
   showMode(getMode());
 
   if (!enabled) notePad << _T("Wallpaper changer is not enabled") << nCrlf;
+
+  getCurrent();
 
   display(NotePadSrc);
   }
@@ -84,10 +85,10 @@ String t;
   iniFile.readString(Section, CurrentKey, r);
   iniFile.readString(Section, LastKey,    s);
 
-  t = r + _T("\r\n") + s;   loadClipBoard(t);
+  t = r + _T("\r\n") + s;   loadClipBoard(t);//
 
-  notePad << _T("Current Wallpaper Path (and in the Clip Board):  ") << r << nCrlf;
-  notePad << _T("Last Wallpaper Path (and in the Clip Board):     ") << s << nCrlf;
+  notePad << _T("Last Wallpaper Path (and in the Clip Board):") << nTab << s << nCrlf;
+  notePad << _T("Current Wallpaper Path (and in the Clip Board):") << nTab << r << nCrlf;
   }
 
 
@@ -131,6 +132,28 @@ uint        pos;
 
 
 int BkGdDoc::getInterval() {return iniFile.readInt(Section, IntervalKey, 1);}
+
+
+void BkGdDoc::onEditCopy() {clipLine.load();}
+
+
+
+#if 0
+void BkGdDoc::OnContextMenu(CWnd* , CPoint point) {
+CRect  rect;
+CMenu* popup;
+CWnd*  pWndPopupOwner = this;
+
+  if (point.x == -1 && point.y == -1)
+            {GetClientRect(rect);  ClientToScreen(rect);  point = rect.TopLeft();  point.Offset(5, 5);}
+
+  popup = menu.GetSubMenu(0);   if (!popup) return;
+
+  while (pWndPopupOwner->GetStyle() & WS_CHILD) pWndPopupOwner = pWndPopupOwner->GetParent();
+
+  popup->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, point.x, point.y, this);
+  }
+#endif
 
 
 void BkGdDoc::onSetMode() {

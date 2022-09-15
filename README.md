@@ -91,6 +91,20 @@ The "HTML Help Workshop" (google it) must be installed on the PC.
 
 ## Updates
 
+### Update 9/14/22
+
+Added a little logic to copy information on the window into the clip board.  Here are the steps:
+
+  - The line is divided by tabs.
+  - The mouse cursor is placed on a line after a tab.
+  - When the left mouse button is pressed the part of the line from the tab to the end of the line is
+selected and highlighted.
+  - There are several ways to copy the selected text into the clip board:
+    * Press Ctrl-C
+    * Instead of a single press, double click the left mouse button
+    * Use the Menu/Edit/Copy Command
+    * Press the right mouse button and select the Copy Command in the popup menu
+
 ### Update 9/10/22
 
 Changed the Icon name in WixApp so that the startup executable is represented in the Win11

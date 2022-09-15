@@ -19,6 +19,11 @@
 #define ID_EnableBkGdEx       407
 #define ID_DisableBkGdEx      408
 
+#define ID_PopupMenu          409
+#define ID_Pup0               410
+#define ID_Pup1               411
+#define ID_Pup2               412
+
 #define IDM_ABOUT             200               // Messages
 #define IDM_Initialize        201
 #define IDM_Next              202
@@ -31,7 +36,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE  105
-#define _APS_NEXT_COMMAND_VALUE   410
+#define _APS_NEXT_COMMAND_VALUE   420
 #define _APS_NEXT_CONTROL_VALUE   207
 #define _APS_NEXT_SYMED_VALUE     300
 #endif

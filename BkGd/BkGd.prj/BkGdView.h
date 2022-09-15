@@ -14,6 +14,9 @@ class BkGdView : public CScrView {
 NotePadRpt dspNote;
 NotePadRpt prtNote;
 
+CMenu      menu;
+CMenu      sub;
+
 protected: // create from serialization only
 
   BkGdView() noexcept;
@@ -47,6 +50,11 @@ public:
   DECLARE_MESSAGE_MAP()
 
   afx_msg void OnSetFocus(CWnd* pOldWnd);
+  afx_msg void OnLButtonDown(  UINT nFlags, CPoint point);
+  afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
+
+  afx_msg void OnContextMenu(CWnd* , CPoint point);
+  afx_msg void onCopy();
   };
 
 
