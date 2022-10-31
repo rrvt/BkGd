@@ -109,6 +109,9 @@ int curY   = d.vert.pos();
   }
 
 
+void Device::tab() {clipLine.setHzPos(hz.currentPos()); clipLine.close(dc);}
+
+
 void Device::crlf()
         {if (vert.lf(printing, footer)) hz.cr(); clipLine.setHzPos(hz.currentPos()); clipLine.close(dc);}
 
@@ -329,13 +332,8 @@ int w = txtWidth(frag);
     if (clipLine.isOpen()) clipTabInvert();
 
     clipLine.clipRegion(frag, hz.currentPos(), w, vert, dc);
-#if 1
+
     dcOut(hz.currentPos(), frag);
-#else
-    CString cs;  cs = frag;
-    try {if (!dc->TextOut(hz.currentPos(), vert.pos(), cs)) {outError(cs); return;}}
-    catch (...)                                             {outError(cs); return;}
-#endif
     }
 
   hz.move(w);   clipLine.setHzPos(hz.currentPos());
@@ -379,4 +377,13 @@ String err = _T("Unable to output: '"); err += stg; err += _T("'");
 
   messageBox(err);
   }
+
+
+
+#if 1
+#else
+    CString cs;  cs = frag;
+    try {if (!dc->TextOut(hz.currentPos(), vert.pos(), cs)) {outError(cs); return;}}
+    catch (...)                                             {outError(cs); return;}
+#endif
 

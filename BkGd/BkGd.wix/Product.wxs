@@ -27,8 +27,8 @@
     </Publish>
   </UI>
 
-  <WixVariable Id="WixUIDialogBmp" Value="D:\Sources\WixApp\Debug\dialog.bmp"/>
-  <WixVariable Id="WixUIBannerBmp" Value="D:\Sources\WixApp\Debug\banner.bmp"/>
+  <WixVariable Id="WixUIDialogBmp" Value="C:\Program Files (x86)\WixApp\dialog.bmp"/>
+  <WixVariable Id="WixUIBannerBmp" Value="C:\Program Files (x86)\WixApp\banner.bmp"/>
 
   <Icon     Id="BkGd_Icon.exe" SourceFile="$(var.SolutionDir)..\BkGd.prj\res\BkGd.ico"/>
   <Icon     Id="BkGdEx_Startup_App.exe" SourceFile="$(var.SolutionDir)..\BkGdEx.prj\BkGdEx.ico"/>
@@ -121,7 +121,7 @@
 
 <Fragment>
 
-  <Component Id="UninstallBkGd.cmp"  Guid="8327EADD-9E53-4CF6-8196-2B2C6524E596" Directory="BkGd.pmf">
+  <Component Id="UninstallBkGd.cmp"  Guid="A5D04F43-D134-4D1F-9899-EF6E5B8B1F2D" Directory="BkGd.pmf">
 
     <Shortcut Id               = "UninstallBkGd.shc"
               Name             = "Uninstall BkGd"

@@ -91,6 +91,11 @@ The "HTML Help Workshop" (google it) must be installed on the PC.
 
 ## Updates
 
+### Update 10/30/22
+
+Start app at the same position and size as when the app last exited.  Update the background of the
+toolbar.  Update the help file icons.
+
 ### Update 9/14/22
 
 Added a little logic to copy information on the window into the clip board.  Here are the steps:

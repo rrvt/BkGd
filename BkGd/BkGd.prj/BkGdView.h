@@ -59,18 +59,6 @@ public:
 
 
 #ifndef _DEBUG  // debug version in BkGdView.cpp
-inline BkGdDoc* BkGdView::GetDocument() const
-   { return reinterpret_cast<BkGdDoc*>(m_pDocument); }
-#endif
-
-
-
-
-#ifdef Examples
-#include "StoreRpt.h"
-#endif
-#ifdef Examples
-StoreRpt   dspStore;
-StoreRpt   prtStore;
+inline BkGdDoc* BkGdView::GetDocument() const {return reinterpret_cast<BkGdDoc*>(m_pDocument);}
 #endif
 

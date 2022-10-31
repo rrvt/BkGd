@@ -112,7 +112,8 @@ private:
   static Device& doCR(            Device& d) {if (d.textOut()) d.hz.cr(); return d;}
 
   static Device& doEndPage(       Device& d);
-  static Device& doTab(           Device& d) {if (d.textOut()) d.hz.tab(d.rightTab); return d;}
+  static Device& doTab(           Device& d) {if (d.textOut()) {d.tab(); d.hz.tab(d.rightTab);} return d;}
+
 
   static Device& doCenter(        Device& d) {if (d.textOut())  d.center = true;  return d;}
   static Device& doRight(         Device& d) {if (d.textOut())  d.right  = true;  return d;}
@@ -142,6 +143,7 @@ private:
   Device& append(int   v);
   Device& append(ulong v);
 
+  void     tab();
   void     crlf();
 
   void     initializeFont(TCchar* face, double fontSize);

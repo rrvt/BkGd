@@ -10,7 +10,8 @@
 ClipLine clipLine;
 
 
-void ClipLine::clear() {clipped.clear(); savedDC = 0; opened = false;}
+void ClipLine::clear()
+    {savedDC = 0;   opened = false;   point = {-99, -99};   hzPos = 0;   tabSpaces = 0;  clipped.clear();}
 
 
 int ClipLine::tabWidth(int newPos, int maxChWidth) {
@@ -32,8 +33,9 @@ int y1 = y0 + vert.heightCh();
   }
 
 
-void ClipLine::add(TCchar* txt) {
 static String Spaces = _T("                                                                           ");
+
+void ClipLine::add(TCchar* txt) {
 
   if (tabSpaces) {clipped += Spaces.substr(0, tabSpaces);  tabSpaces = 0;}
 
