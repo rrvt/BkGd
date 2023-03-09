@@ -83,7 +83,6 @@ public:
   afx_msg void OnEnableBkGdEx();
   afx_msg void onDisableBkGdEx();
   afx_msg void onEditCopy();
-  afx_msg void OnOptions();
   };
 
 

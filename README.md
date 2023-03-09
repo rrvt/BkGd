@@ -91,6 +91,14 @@ The "HTML Help Workshop" (google it) must be installed on the PC.
 
 ## Updates
 
+### Update 3/8/23
+
+Added numbers to notepad archive output.
+
+### Update 3/7/23
+
+Fixed (hopefully) Print and Print Preview.  See MakeApp for details.
+
 ### Update 10/30/22
 
 Start app at the same position and size as when the app last exited.  Update the background of the

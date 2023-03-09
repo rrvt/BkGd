@@ -9,7 +9,6 @@
 #include "IniFile.h"
 #include "MainFrame.h"
 #include "NotePad.h"
-#include "Options.h"
 #include "BkGdDoc.h"
 #include "BkGdView.h"
 
@@ -21,9 +20,8 @@ IniFile iniFile;
 // BkGd
 
 BEGIN_MESSAGE_MAP(BkGd, CWinAppEx)
-  ON_COMMAND(ID_FILE_PRINT_SETUP, &OnFilePrintSetup)
-  ON_COMMAND(ID_Help,             &OnHelp)
-  ON_COMMAND(ID_App_About,        &OnAppAbout)
+  ON_COMMAND(ID_Help,      &onHelp)
+  ON_COMMAND(ID_App_About, &onAppAbout)
 END_MESSAGE_MAP()
 
 
@@ -73,26 +71,11 @@ BOOL BkGd::InitInstance() {
 
   view()->setFont(_T("Arial"), 12.0);
 
-  options.load();    view()->setOrientation(options.orient);
-
   doc()->showCurrent();
 
   m_pMainWnd->ShowWindow(SW_SHOW);   m_pMainWnd->UpdateWindow();   return TRUE;
   }
 
-
-
-void BkGd::OnFilePrintSetup() {
-PrtrOrient orient;
-
-  view()->setPrntrOrient(getDevMode());
-
-    CWinApp::OnFilePrintSetup();
-
-  orient = view()->getPrntrOrient(getDevMode());
-
-  options.setOrient(orient);   view()->setOrientation(options.orient);
-  }
 
 
 int BkGd::ExitInstance() {
@@ -105,12 +88,12 @@ int BkGd::ExitInstance() {
   }
 
 
-void BkGd::OnHelp() {
+void BkGd::onHelp() {
 String topic = m_pszHelpFilePath; topic += _T(">Introduction");
 
   ::HtmlHelp(m_pMainWnd->m_hWnd, topic,  HH_DISPLAY_TOC, 0);
   }
 
 
-void BkGd::OnAppAbout() {AboutDlg aboutDlg; aboutDlg.DoModal();}
+void BkGd::onAppAbout() {AboutDlg aboutDlg; aboutDlg.DoModal();}
 

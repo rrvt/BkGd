@@ -6,7 +6,8 @@
 #include "BkGd.h"
 #include "BkGdDoc.h"
 #include "ClipLine.h"
-#include "Options.h"
+#include "OptionsDlg.h"
+#include "Resource.h"
 #include "Resources.h"
 
 
@@ -15,6 +16,8 @@
 IMPLEMENT_DYNCREATE(BkGdView, CScrView)
 
 BEGIN_MESSAGE_MAP(BkGdView, CScrView)
+  ON_COMMAND(ID_Options, &onOptions)
+
   ON_WM_LBUTTONDOWN()
   ON_WM_LBUTTONDBLCLK()
 
@@ -42,56 +45,33 @@ BOOL BkGdView::PreCreateWindow(CREATESTRUCT& cs) {
   }
 
 
-void BkGdView::OnPrepareDC(CDC* pDC, CPrintInfo* pInfo) {
-uint   x;
-double topMgn   = options.topMargin.stod(x);
-double leftMgn  = options.leftMargin.stod(x);
-double rightMgn = options.rightMargin.stod(x);
-double botMgn   = options.botMargin.stod(x);
+void BkGdView::onOptions() {
+OptionsDlg dlg;
 
-  setMgns(leftMgn,  topMgn,  rightMgn, botMgn, pDC);   CScrView::OnPrepareDC(pDC, pInfo);
+  if (printer.name.isEmpty()) printer.load(0);
+
+  if (dlg.DoModal() == IDOK) pMgr.setFontScale(printer.scale);
   }
+
 
 
 // Perpare output (i.e. report) then start the output with the call to SCrView
 
-void BkGdView::onPrepareOutput(bool printing) {
-DataSource ds = doc()->dataSrc();
-
-  if (printing)
-    switch(ds) {
-      case NotePadSrc : prtNote.print(*this);  break;
-      }
-
-  else
-    switch(ds) {
-      case NotePadSrc : dspNote.display(*this);  break;
-      }
+void BkGdView::onBeginPrinting() {prtNote.onBeginPrinting(*this);}
 
 
-  CScrView::onPrepareOutput(printing);
-  }
-
-
-void BkGdView::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo) {
-
-  switch(doc()->dataSrc()) {
-    case NotePadSrc : setOrientation(options.orient); break;    // Setup separate Orientation?
-    }
-  setPrntrOrient(theApp.getDevMode(), pDC);   CScrView::OnBeginPrinting(pDC, pInfo);
-  }
+void BkGdView::onDisplayOutput() {dspNote.display(*this);}
 
 
 // The footer is injected into the printed output, so the output goes directly to the device.
 // The output streaming functions are very similar to NotePad's streaming functions so it should not
 // be a great hardship to construct a footer.
 
-void BkGdView::printFooter(Device& dev, int pageNo) {
+void BkGdView::printFooter(DevBase& dev, int pageNo) {
   switch(doc()->dataSrc()) {
-    case NotePadSrc : prtNote.footer(dev, pageNo);  break;
+    case NotePadSrc : prtNote.prtFooter(dev, pageNo);  break;
     }
   }
-
 
 
 void BkGdView::OnEndPrinting(CDC* pDC, CPrintInfo* pInfo) {

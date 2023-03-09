@@ -12,7 +12,6 @@
 #include "IntervalDlg.h"
 #include "MessageBox.h"
 #include "NotePad.h"
-#include "Options.h"
 #include "ToolBar.h"
 
 
@@ -37,7 +36,6 @@ BEGIN_MESSAGE_MAP(BkGdDoc, CDoc)
   ON_COMMAND(ID_SelectRootPath, &onSelectRootPath)
   ON_COMMAND(ID_SetInterval,    &onSetInterval)
   ON_COMMAND(ID_SetMode,        &onSetMode)
-  ON_COMMAND(ID_Options,        &OnOptions)
   ON_COMMAND(ID_StopWallPaper,  &onStopWallPaper)
   ON_COMMAND(ID_EnableBkGdEx,   &OnEnableBkGdEx)
   ON_COMMAND(ID_DisableBkGdEx,  &onDisableBkGdEx)
@@ -137,25 +135,6 @@ int BkGdDoc::getInterval() {return iniFile.readInt(Section, IntervalKey, 1);}
 void BkGdDoc::onEditCopy() {clipLine.load();}
 
 
-
-#if 0
-void BkGdDoc::OnContextMenu(CWnd* , CPoint point) {
-CRect  rect;
-CMenu* popup;
-CWnd*  pWndPopupOwner = this;
-
-  if (point.x == -1 && point.y == -1)
-            {GetClientRect(rect);  ClientToScreen(rect);  point = rect.TopLeft();  point.Offset(5, 5);}
-
-  popup = menu.GetSubMenu(0);   if (!popup) return;
-
-  while (pWndPopupOwner->GetStyle() & WS_CHILD) pWndPopupOwner = pWndPopupOwner->GetParent();
-
-  popup->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, point.x, point.y, this);
-  }
-#endif
-
-
 void BkGdDoc::onSetMode() {
 bool mode = getMode();
 
@@ -240,9 +219,6 @@ PROCESS_INFORMATION processInfo;
   }
 
 
-void BkGdDoc::OnOptions() {options(view());  view()->setOrientation(options.orient);}
-
-
 void BkGdDoc::display(DataSource ds) {dataSource = ds; invalidate();}
 
 
@@ -282,5 +258,23 @@ void BkGdDoc::Dump(CDumpContext& dc) const {CDocument::Dump(dc);}
 #if 1
 #else
   notePad << _T("Wallpaper Files Root Path: ") << path << nCrlf;
+#endif
+
+
+#if 0
+void BkGdDoc::OnContextMenu(CWnd* , CPoint point) {
+CRect  rect;
+CMenu* popup;
+CWnd*  pWndPopupOwner = this;
+
+  if (point.x == -1 && point.y == -1)
+            {GetClientRect(rect);  ClientToScreen(rect);  point = rect.TopLeft();  point.Offset(5, 5);}
+
+  popup = menu.GetSubMenu(0);   if (!popup) return;
+
+  while (pWndPopupOwner->GetStyle() & WS_CHILD) pWndPopupOwner = pWndPopupOwner->GetParent();
+
+  popup->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, point.x, point.y, this);
+  }
 #endif
 

@@ -2,6 +2,9 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
+      <FullPath>D:\Sources\BkGd\Release\BkGdEx.exe</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
       <FullPath>D:\Sources\BkGd\Release\BkGd.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>

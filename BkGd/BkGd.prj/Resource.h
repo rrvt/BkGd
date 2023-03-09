@@ -7,6 +7,12 @@
 #define IDD_DIALOG1           103
 #define IDD_Interval          103
 
+
+#define IDM_ABOUT             200               // Messages
+#define IDM_Initialize        201
+#define IDM_Next              202
+#define IDM_Mode              203
+#define IDM_EXIT              205
 #define IDC_Interval          206
 
 #define ID_SelectRootPath     400
@@ -15,20 +21,17 @@
 #define ID_Next               403
 #define ID_SetMode            404
 #define ID_StopWallPaper      405
-#define ID_Help               406
-#define ID_EnableBkGdEx       407
-#define ID_DisableBkGdEx      408
+#define ID_Options            406
+#define ID_Help               407
+#define ID_EnableBkGdEx       408
+#define ID_DisableBkGdEx      409
 
-#define ID_PopupMenu          409
-#define ID_Pup0               410
-#define ID_Pup1               411
-#define ID_Pup2               412
+#define ID_PopupMenu          420
+#define ID_Pup0               421
+#define ID_Pup1               422
+#define ID_Pup2               423
 
-#define IDM_ABOUT             200               // Messages
-#define IDM_Initialize        201
-#define IDM_Next              202
-#define IDM_Mode              203
-#define IDM_EXIT              205
+#define ID_App_About          424
 
 
 // Next default values for new objects
