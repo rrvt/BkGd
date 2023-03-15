@@ -46,11 +46,25 @@ BOOL BkGdView::PreCreateWindow(CREATESTRUCT& cs) {
 
 
 void BkGdView::onOptions() {
+#if 1
+OptionsDlg dlg;
+
+  if (printer.name.isEmpty()) printer.load(0);
+
+  initNoteOrietn();   dlg.orient = printer.toStg(prtNote.prtrOrietn);
+
+  if (dlg.DoModal() == IDOK) {
+    pMgr.setFontScale(printer.scale);
+
+    prtNote.prtrOrietn = printer.toOrient(dlg.orient);   saveNoteOrietn();
+    }
+#else
 OptionsDlg dlg;
 
   if (printer.name.isEmpty()) printer.load(0);
 
   if (dlg.DoModal() == IDOK) pMgr.setFontScale(printer.scale);
+#endif
   }
 
 
