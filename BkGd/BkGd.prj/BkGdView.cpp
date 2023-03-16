@@ -26,7 +26,7 @@ BEGIN_MESSAGE_MAP(BkGdView, CScrView)
 END_MESSAGE_MAP()
 
 
-BkGdView::BkGdView() noexcept : dspNote( dMgr.getNotePad()), prtNote( pMgr.getNotePad()) {
+BkGdView::BkGdView() noexcept {
 ResourceData res;
 String       pn;
   if (res.getProductName(pn)) prtNote.setTitle(pn);
@@ -46,7 +46,6 @@ BOOL BkGdView::PreCreateWindow(CREATESTRUCT& cs) {
 
 
 void BkGdView::onOptions() {
-#if 1
 OptionsDlg dlg;
 
   if (printer.name.isEmpty()) printer.load(0);
@@ -58,13 +57,6 @@ OptionsDlg dlg;
 
     prtNote.prtrOrietn = printer.toOrient(dlg.orient);   saveNoteOrietn();
     }
-#else
-OptionsDlg dlg;
-
-  if (printer.name.isEmpty()) printer.load(0);
-
-  if (dlg.DoModal() == IDOK) pMgr.setFontScale(printer.scale);
-#endif
   }
 
 

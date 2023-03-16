@@ -91,6 +91,10 @@ The "HTML Help Workshop" (google it) must be installed on the PC.
 
 ## Updates
 
+### Update 3/15/23
+
+Complete move of orientation to reports.
+
 ### Update 3/13/23
 
 When there are multiple reports the printed output orientation is by report, not the printer.  Thus the

@@ -11,9 +11,6 @@ class BkGdDoc;
 
 class BkGdView : public CScrView {
 
-NotePadRpt dspNote;
-NotePadRpt prtNote;
-
 CMenu      menu;
 CMenu      sub;
 

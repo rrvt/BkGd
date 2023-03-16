@@ -3,7 +3,6 @@
 
 #pragma once
 #include "ReportBase.h"
-#include "Printer.h"
 
 
 class Note;
@@ -12,7 +11,6 @@ class Note;
 class NotePadRpt : public ReportBase {
 
 public:
-PrtrOrient prtrOrietn;
 
                NotePadRpt(NotePad& notePad) : ReportBase(notePad) { }
               ~NotePadRpt() { }
