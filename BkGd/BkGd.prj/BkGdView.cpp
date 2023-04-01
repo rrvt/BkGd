@@ -59,7 +59,7 @@ OptionsDlg dlg;
 void BkGdView::onRptOrietn() {
 RptOrietnDlg dlg;
 
-  dlg.lbl00 = _T("Media:");
+  dlg.lbl00 = _T("Report:");
 
   dlg.ntpd = printer.toStg(prtNote.prtrOrietn);
 
