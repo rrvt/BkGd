@@ -4,13 +4,13 @@
 #include "stdafx.h"
 #include "BkGd.h"
 #include "AboutDlg.h"
-#include "ExtraResource.h"
+#include "BkGdDoc.h"
+#include "BkGdView.h"
 #include "FileName.h"
 #include "IniFile.h"
 #include "MainFrame.h"
 #include "NotePad.h"
-#include "BkGdDoc.h"
-#include "BkGdView.h"
+#include "ResourceExtra.h"
 
 
 BkGd    theApp;                         // The one and only BkGd object

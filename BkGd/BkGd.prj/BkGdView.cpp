@@ -9,6 +9,7 @@
 #include "OptionsDlg.h"
 #include "Resource.h"
 #include "Resources.h"
+#include "RptOrientDlgOne.h"
 
 
 // BkGdView
@@ -16,7 +17,8 @@
 IMPLEMENT_DYNCREATE(BkGdView, CScrView)
 
 BEGIN_MESSAGE_MAP(BkGdView, CScrView)
-  ON_COMMAND(ID_Options, &onOptions)
+  ON_COMMAND(ID_Options,     &onOptions)
+  ON_COMMAND(ID_Orientation, &onRptOrietn)
 
   ON_WM_LBUTTONDOWN()
   ON_WM_LBUTTONDBLCLK()
@@ -50,15 +52,19 @@ OptionsDlg dlg;
 
   if (printer.name.isEmpty()) printer.load(0);
 
-  initNoteOrietn();   dlg.orient = printer.toStg(prtNote.prtrOrietn);
-
-  if (dlg.DoModal() == IDOK) {
-    pMgr.setFontScale(printer.scale);
-
-    prtNote.prtrOrietn = printer.toOrient(dlg.orient);   saveNoteOrietn();
-    }
+  if (dlg.DoModal() == IDOK) pMgr.setFontScale(printer.scale);
   }
 
+
+void BkGdView::onRptOrietn() {
+RptOrietnDlg dlg;
+
+  dlg.lbl00 = _T("Media:");
+
+  dlg.ntpd = printer.toStg(prtNote.prtrOrietn);
+
+  if (dlg.DoModal() == IDOK) {prtNote.prtrOrietn = printer.toOrient(dlg.ntpd);   saveNoteOrietn();}
+  }
 
 
 // Perpare output (i.e. report) then start the output with the call to SCrView

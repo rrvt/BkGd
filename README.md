@@ -91,6 +91,10 @@ The "HTML Help Workshop" (google it) must be installed on the PC.
 
 ## Updates
 
+### Update 3/31/23
+
+Added Report Orientation Dialog to App.
+
 ### Update 3/15/23
 
 Complete move of orientation to reports.

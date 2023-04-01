@@ -26,6 +26,7 @@ public:
 
   virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 
+  virtual void onPreparePrinting(CPrintInfo* info) {prtNote.onPreparePrinting(info);}
   virtual void onBeginPrinting();
   virtual void onDisplayOutput();
 
@@ -46,6 +47,7 @@ public:
   DECLARE_MESSAGE_MAP()
 
   afx_msg void onOptions();
+  afx_msg void onRptOrietn();
   afx_msg void OnSetFocus(CWnd* pOldWnd);
 
   afx_msg void OnLButtonDown(  UINT nFlags, CPoint point);
