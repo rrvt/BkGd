@@ -91,6 +91,10 @@ The "HTML Help Workshop" (google it) must be installed on the PC.
 
 ## Updates
 
+### Update 12/11/23
+
+Improve (modify) ExpanableP and associated changes.
+
 ### Update 6/25/23
 
 Library Update.
