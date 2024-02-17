@@ -91,6 +91,11 @@ The "HTML Help Workshop" (google it) must be installed on the PC.
 
 ## Updates
 
+### Update 2/16/24
+
+Reorganized the Library so that it compiles once into Debug and Release directories under the Library
+directory.
+
 ### Update 12/11/23
 
 Improve (modify) ExpandableP and associated changes.
