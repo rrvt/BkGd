@@ -12,6 +12,8 @@ extern TCchar* WallPaperKey;
 extern TCchar* ModeKey;
 extern TCchar* IndexKey;
 extern TCchar* DebugKey;
+extern TCchar* CountKey;
+
 
 
 struct Item {
@@ -28,12 +30,13 @@ class WallPaper {
 String                 path;
 Random                 rand;
 int                    index;
+int                    maxHits;
 bool                   mode;             // true for random, false is linear
 Expandable<Item, 1024> data;
 
 public:
 
-          WallPaper() : rand(), index(0), mode(false) { }
+          WallPaper() : rand(), index(0), maxHits(0), mode(false) { }
          ~WallPaper() { }
 
   void    initialize();
@@ -44,6 +47,8 @@ public:
 
   void    getMode() {mode  = iniFile.readInt(Section, ModeKey, 0) != 0;}
 
+  int     nData()      {return data.end();}                       // returns number of data items in array
+
 private:
 
   void    find(TCchar* path);
@@ -53,8 +58,6 @@ private:
   // returns either a pointer to datum at index i in array or zero
 
   Item*   datum(int i) {return 0 <= i && i < nData() ? &data[i] : 0;}
-
-  int     nData()      {return data.end();}                       // returns number of data items in array
 
   void    removeDatum(int i) {if (0 <= i && i < nData()) data.del(i);}
 

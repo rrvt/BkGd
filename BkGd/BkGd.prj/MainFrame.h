@@ -32,7 +32,6 @@ public:                                             // Overrides
   void     setupToolBar();
   ToolBar& getToolBar() {return toolBar;}
 
-
 #ifdef _DEBUG
   virtual void AssertValid() const;
   virtual void Dump(CDumpContext& dc) const;

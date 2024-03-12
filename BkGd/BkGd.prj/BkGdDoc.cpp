@@ -21,8 +21,12 @@ static TCchar* WallPaperKey = _T("WallPaperPath");
 static TCchar* IntervalKey  = _T("Interval");
        TCchar* EnabledKey   = _T("Enabled");
 static TCchar* ModeKey      = _T("Mode");
+
+static TCchar* IndexKey     = _T("Index");
 static TCchar* CurrentKey   = _T("CurrentPath");
 static TCchar* LastKey      = _T("LastPath");
+static TCchar* CountKey     = _T("Count");
+static TCchar* MaxHitsKey   = _T("MaxHits");
 
 
 // BkGdDoc
@@ -54,43 +58,10 @@ BkGdDoc::BkGdDoc() noexcept : bkGdEx(0), dataSource(NotePadSrc) {
 BkGdDoc::~BkGdDoc() { }
 
 
-void BkGdDoc::showCurrent() {
-String pth;
-int    intvl;
-
-  getRootPath(pth);   showRootPath(pth);
-
-  intvl = getInterval();  notePad << _T("Change interval is ") << intvl << _T(" Min") << nCrlf;
-
-  showMode(getMode());
-
-  if (!enabled) notePad << _T("Wallpaper changer is not enabled") << nCrlf;
-
-  getCurrent();
-
-  display(NotePadSrc);
-  }
+void BkGdDoc::onGetCurrent() {notePad.clear();   showCurrent();   display();}
 
 
-void BkGdDoc::onGetCurrent() {getCurrent();   display(NotePadSrc);}
-
-
-void BkGdDoc::getCurrent() {
-String r;
-String s;
-String t;
-
-  iniFile.readString(Section, CurrentKey, r);
-  iniFile.readString(Section, LastKey,    s);
-
-  t = r + _T("\r\n") + s;   loadClipBoard(t);//
-
-  notePad << _T("Last Wallpaper Path (and in the Clip Board):") << nTab << s << nCrlf;
-  notePad << _T("Current Wallpaper Path (and in the Clip Board):") << nTab << r << nCrlf;
-  }
-
-
-void BkGdDoc::onNext() {sendCommand(IDM_Next);}
+void BkGdDoc::onNext() {notePad.clear();   sendCommand(IDM_Next);  showCurrent();   display();}
 
 
 void BkGdDoc::onSelectRootPath() {
@@ -99,19 +70,12 @@ void BkGdDoc::onSelectRootPath() {
 
   if (getDirPathDlg(_T("Wallpaper Root Path"), path)) {iniFile.writeString(Section, WallPaperKey, path);}
 
-  showRootPath(path);
-
-  sendCommand(IDM_Initialize);   display(NotePadSrc);
+  notePad.clear();   sendCommand(IDM_Initialize);   showCurrent();   display();
   }
 
 
-void BkGdDoc::getRootPath(String& path) {iniFile.readString(Section, WallPaperKey, path);}
-
-
-void BkGdDoc::showRootPath(TCchar* path) {notePad << _T("Wallpaper Files Root Path: ") << path << nCrlf;}
-
-
 void BkGdDoc::onSetInterval() {
+int         interval;
 IntervalDlg dlg;
 uint        pos;
 
@@ -125,14 +89,8 @@ uint        pos;
 
   iniFile.writeInt(Section, IntervalKey, interval);
 
-  sendCommand(IDM_Initialize);
+  notePad.clear();   sendCommand(IDM_Next);   showCurrent();   display();
   }
-
-
-int BkGdDoc::getInterval() {return iniFile.readInt(Section, IntervalKey, 1);}
-
-
-void BkGdDoc::onEditCopy() {clipLine.load();}
 
 
 void BkGdDoc::onSetMode() {
@@ -142,8 +100,52 @@ bool mode = getMode();
 
   iniFile.writeInt(Section, ModeKey, mode);
 
-  showMode(mode);   sendCommand(IDM_Mode);   display(NotePadSrc);
+  notePad.clear();   sendCommand(IDM_Mode);   showCurrent();   display();
   }
+
+
+void BkGdDoc::sendCommand(int cmd) {
+HWND hwnd = findBkGdEx();  if (!hwnd) return;
+int  lastErr;
+
+  if (!enabled) notePad << _T("Wallpaper changer is not enabled") << nCrlf;
+
+  if (PostMessage(hwnd, WM_COMMAND, cmd, 0)) return;
+
+  lastErr = GetLastError();   notePad << _T("Last Error = ") << lastErr << nCrlf;
+  }
+
+
+void BkGdDoc::showCurrent() {
+String pth;
+int    intvl;
+
+  getRootPath(pth);   showRootPath(pth);
+
+  intvl = getInterval();  notePad << _T("Change interval is ") << getInterval() << _T(" Min") << nCrlf;
+
+  showMode(getMode());
+
+  if (!enabled) notePad << _T("Wallpaper changer is not enabled") << nCrlf;
+
+  getCurrent();
+  }
+
+
+void BkGdDoc::getRootPath(String& path) {iniFile.readString(Section, WallPaperKey, path);}
+
+
+void BkGdDoc::showRootPath(TCchar* path) {
+int count;
+
+  notePad << _T("Wallpaper Files Root Path:  ") << path << nCrlf;
+
+  iniFile.read(Section, CountKey, count);
+  notePad << _T("Number of Wallpaper Files = ") << count << nCrlf;
+  }
+
+
+int BkGdDoc::getInterval() {return iniFile.readInt(Section, IntervalKey, 1);}
 
 
 bool BkGdDoc::getMode() {return iniFile.readInt(Section, ModeKey,  1) != 0;}
@@ -157,6 +159,32 @@ void BkGdDoc::showMode(bool mode) {
   }
 
 
+void BkGdDoc::getCurrent() {
+String r;
+String s;
+String t;
+int    index;
+int    maxHits;
+
+  iniFile.readString(Section, CurrentKey, r);
+  iniFile.readString(Section, LastKey,    s);
+
+  t = r + _T("\r\n") + s;   loadClipBoard(t);//
+
+  notePad << _T("Last Wallpaper Path (and in the Clip Board):") << nTab << s << nCrlf;
+  notePad << _T("Current Wallpaper Path (and in the Clip Board):") << nTab << r << nCrlf;
+
+  iniFile.read(Section, IndexKey, index);
+  notePad << _T("Current Index = ") << index << nCrlf;
+
+  iniFile.read(Section, MaxHitsKey, maxHits);
+  if (maxHits) {notePad << _T("Max No of Hits = ") << maxHits << nCrlf;}
+  }
+
+
+void BkGdDoc::onEditCopy() {clipLine.load();}
+
+
 void BkGdDoc::OnEnableBkGdEx()  {setEnabled(true);   findBkGdEx();}
 void BkGdDoc::onDisableBkGdEx() {onStopWallPaper();  setEnabled(false);}
 
@@ -166,24 +194,12 @@ HWND hwnd = findBkGdEx(false);   if (!hwnd) return;
 int  lastErr;
 
   if (PostMessage(hwnd, WM_COMMAND, IDM_EXIT, 0)) {
-    bkGdEx = 0;   notePad << _T("Wallpaper Changer shutting down") << nCrlf;  display(NotePadSrc);
+    bkGdEx = 0;   notePad << _T("Wallpaper Changer shutting down") << nCrlf;  display();
 
     return;
     }
 
-  lastErr = GetLastError();   notePad << _T("Last Error = ") << lastErr << nCrlf;   display(NotePadSrc);
-  }
-
-
-void BkGdDoc::sendCommand(int cmd) {
-HWND hwnd = findBkGdEx();  if (!hwnd) return;
-int  lastErr;
-
-  if (!enabled) notePad << _T("Wallpaper changer is not enabled") << nCrlf;
-
-  if (PostMessage(hwnd, WM_COMMAND, cmd, 0)) return;
-
-  lastErr = GetLastError();   notePad << _T("Last Error = ") << lastErr << nCrlf;   display(NotePadSrc);
+  lastErr = GetLastError();   notePad << _T("Last Error = ") << lastErr << nCrlf;   display();
   }
 
 
@@ -199,7 +215,7 @@ String title;
   for (int i = 0; !bkGdEx && i < 2; i++)
            {bkGdEx = FindWindow(0, title);   if (!bkGdEx && restart && !startBkGdEx()) break;}
 
-  if (!bkGdEx) {notePad << _T("Wallpaper Changer is not running!") << nCrlf;   display(NotePadSrc);}
+  if (!bkGdEx) {notePad << _T("Wallpaper Changer is not running!") << nCrlf;   display();}
 
   return bkGdEx;
   }
@@ -213,7 +229,7 @@ PROCESS_INFORMATION processInfo;
   GetStartupInfo(&startupInfo);
 
   if (!CreateProcess(cmdName, 0, 0, 0, false, NORMAL_PRIORITY_CLASS, 0, 0, &startupInfo, &processInfo))
-      {notePad << _T("Unable to create Wallpaper process") << nCrlf; display(NotePadSrc); return false;}
+      {notePad << _T("Unable to create Wallpaper process") << nCrlf; display(); return false;}
 
   return !WaitForInputIdle(processInfo.hProcess, INFINITE);
   }

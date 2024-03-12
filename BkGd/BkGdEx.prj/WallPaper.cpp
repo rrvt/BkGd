@@ -11,11 +11,13 @@ TCchar* Section      = _T("Global");
 TCchar* WallPaperKey = _T("WallPaperPath");
 TCchar* IntervalKey  = _T("Interval");
 TCchar* EnabledKey   = _T("Enabled");
+TCchar* CountKey     = _T("Count");
+TCchar* MaxHitsKey   = _T("MaxHits");
 
+TCchar* IndexKey     = _T("Index");
 TCchar* CurrentKey   = _T("CurrentPath");
 TCchar* LastKey      = _T("LastPath");
 TCchar* ModeKey      = _T("Mode");
-TCchar* IndexKey     = _T("Index");
 TCchar* DebugKey     = _T("Debug");
 
 
@@ -30,6 +32,8 @@ void WallPaper::initialize() {
   index = iniFile.readInt(Section, IndexKey, 0);
 
   getMode();
+
+  maxHits = 0;   iniFile.write(Section, MaxHitsKey, maxHits);
   }
 
 
@@ -91,19 +95,19 @@ String  s;
 
   index %=  n;
 
-  for (i = 0; data[index].hit && i < n; i++)
-    index = (index + 1) % n;
+  for (i = 0; data[index].hit && i < n; i++) index = (index + 1) % n;
 
-  if (i >= n)
-    for (i = 0; i < n; i++) data[i].hit = false;
+  if (i > maxHits) {maxHits = i; iniFile.write(Section, MaxHitsKey, maxHits);}
+
+  if (i >= n) for (i = 0; i < n; i++) data[i].hit = false;
 
   Item& item = data[index];
+
+  iniFile.write(Section, IndexKey, index);
 
   iniFile.readString(Section, CurrentKey, s);    iniFile.writeString(Section, LastKey, s);
 
   tc = item.s;   item.hit = true;   iniFile.writeString(Section, CurrentKey, tc);
-
-  if (!mode) iniFile.writeInt(   Section, IndexKey,   index);
 
   return (void*) tc;
   }

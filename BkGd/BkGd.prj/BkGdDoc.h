@@ -21,7 +21,6 @@ DECLARE_DYNCREATE(BkGdDoc)
 bool        enabled;                // BkGdEx enabled when true
 HWND        bkGdEx;
 String      path;
-int         interval;
 
 PathDlgDsc  pathDlgDsc;
 
@@ -29,22 +28,20 @@ DataSource  dataSource;
 
 protected: // create from serialization only
 
-
                      BkGdDoc() noexcept;
-
 public:
 
   virtual           ~BkGdDoc();
 
-          void       showCurrent();
-
           DataSource dataSrc() {return dataSource;}
-          void       display(DataSource ds);
+          void       display(DataSource ds = NotePadSrc);
 
   virtual void       serialize(Archive& ar);
 
 private:
 
+
+  void showCurrent();
   void getRootPath(String& path);
   void showRootPath(TCchar* path);
 

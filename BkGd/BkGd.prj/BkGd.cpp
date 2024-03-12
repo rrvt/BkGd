@@ -71,7 +71,7 @@ BOOL BkGd::InitInstance() {
 
   view()->setFont(_T("Arial"), 12.0);
 
-  doc()->showCurrent();
+  doc()->onGetCurrent();
 
   m_pMainWnd->ShowWindow(SW_SHOW);   m_pMainWnd->UpdateWindow();   return TRUE;
   }

@@ -91,6 +91,12 @@ The "HTML Help Workshop" (google it) must be installed on the PC.
 
 ## Updates
 
+### Update 3/12/24
+
+Added more output to BkGd window for most commands.  Added count of pictures used for background.  Added
+index of current picture.  Added maximum number of hits before finding an un-displayed picture in current
+incarnation of BkGd background app.
+
 ### Update 2/16/24
 
 Reorganized the Library so that it compiles once into Debug and Release directories under the Library

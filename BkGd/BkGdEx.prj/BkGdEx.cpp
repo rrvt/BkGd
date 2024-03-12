@@ -166,10 +166,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 
 
 void initialize() {
+int count;
 
   wallPaper.initialize();
 
   if (!iniFile.readString(Section, WallPaperKey, path) || !wallPaper.findAll(path)) return;
+
+  count = wallPaper.nData();   iniFile.writeInt(Section, CountKey, count);
+
+
 
   next();
   }
@@ -187,6 +192,10 @@ int interval;
 
 
 
+VOID CALLBACK timerProc(HWND hWnd, uint nmsg, uint nIDEvent, DWORD dwTime) {wallPaper.set();}
+
+
+
 // Message handler for about box.
 
 INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) {
@@ -201,9 +210,5 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) {
 
   return (INT_PTR)FALSE;
   }
-
-
-
-VOID CALLBACK timerProc(HWND hWnd, uint nmsg, uint nIDEvent, DWORD dwTime) {wallPaper.set();}
 
 

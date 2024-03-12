@@ -74,7 +74,7 @@ public:
 String name;
 
   AdrTbl() : maxID(0) { }
- ~AdrTbl() {clear();}           // adrSet.~AdrSet();
+ ~AdrTbl() {clear();}
 
   void clear() {data.clear();}
 

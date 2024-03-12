@@ -33,7 +33,7 @@ public:
   int      stoi( uint& i, int base=10);
 
   void     clear()   {Empty();}
-  bool     isEmpty() {return IsEmpty();}
+  bool     isEmpty() {return CString::IsEmpty();}
 
   operator TCchar*() const {return GetString();}
   TCchar*      str() const {return GetString();}
