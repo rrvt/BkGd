@@ -35,9 +35,9 @@ String myPath;
 
 extern BkGd theApp;
 
-inline void             invalidate() {theApp.invalidate();}
-inline BkGdDoc*  doc()        {return theApp.doc();}
-inline BkGdView* view()       {return theApp.view();}
-inline MainFrame*       mainFrm()    {return theApp.mainFrm();}
-inline ToolBar&         getToolBar() {return mainFrm()->getToolBar();}
+inline void       invalidate() {theApp.invalidate();}
+inline BkGdDoc*   doc()        {return theApp.doc();}
+inline BkGdView*  view()       {return theApp.view();}
+inline MainFrame* mainFrm()    {return theApp.mainFrm();}
+inline MyToolBar& getToolBar() {return mainFrm()->getToolBar();}
 

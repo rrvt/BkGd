@@ -35,6 +35,8 @@ public:
   void     clear()   {Empty();}
   bool     isEmpty() {return CString::IsEmpty();}
 
+  int      length()  {return GetLength();}
+
   operator TCchar*() const {return GetString();}
   TCchar*      str() const {return GetString();}
 

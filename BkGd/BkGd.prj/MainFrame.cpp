@@ -4,10 +4,6 @@
 #include "stdafx.h"
 #include "MainFrame.h"
 #include "AboutDlg.h"
-//#include "ExtraResource.h"
-//#include "resource.h"
-#include "TBBtnCtx.h"
-
 
 
 // MainFrame
@@ -35,7 +31,7 @@ static UINT indicators[] = {
 
 MainFrame::MainFrame() noexcept : isInitialized(false) { }
 
-MainFrame::~MainFrame() { }
+MainFrame::~MainFrame() {winPos.~WinPos();}
 
 
 BOOL MainFrame::PreCreateWindow(CREATESTRUCT& cs) {
@@ -51,7 +47,7 @@ CRect winRect;
 
   if (CFrameWndEx::OnCreate(lpCreateStruct) == -1) return -1;
 
-  if (!m_wndMenuBar.Create(this)) {TRACE0("Failed to create menubar\n"); return -1;}
+  if (!menuBar.Create(this)) {TRACE0("Failed to create menubar\n"); return -1;}
 
   CMFCPopupMenu::SetForceMenuFocus(FALSE);
 
@@ -59,12 +55,13 @@ CRect winRect;
 
   addAboutToSysMenu(IDD_AboutBox, IDS_AboutBox);
 
-  if (!m_wndStatusBar.Create(this)) {TRACE0("Failed to create status bar\n"); return -1;}
-  m_wndStatusBar.SetIndicators(indicators, noElements(indicators));  //sizeof(indicators)/sizeof(UINT)
+  if (!statusBar.Create(this)) {TRACE0("Failed to create status bar\n"); return -1;}
+
+  statusBar.SetIndicators(indicators, noElements(indicators));  //sizeof(indicators)/sizeof(UINT)
 
   GetWindowRect(&winRect);   winPos.initialPos(this, winRect);
 
-  DockPane(&m_wndMenuBar);   DockPane(&toolBar);
+  DockPane(&menuBar);   DockPane(&toolBar);
 
   CMFCVisualManager::SetDefaultManager(RUNTIME_CLASS(CMFCVisualManagerWindows7));
                                                                          // Affects look of toolbar, etc.
@@ -85,13 +82,10 @@ void MainFrame::OnMove(int x, int y)
 
 
 void MainFrame::OnSize(UINT nType, int cx, int cy) {
-CRect winRect;
-
-  CFrameWndEx::OnSize(nType, cx, cy);
 
   if (!isInitialized) return;
 
-  GetWindowRect(&winRect);   winPos.set(winRect);
+  winPos.set(cx, cy);   CFrameWndEx::OnSize(nType, cx, cy);
   }
 
 
@@ -106,8 +100,7 @@ void MainFrame::setupToolBar() { }
 // MainFrame diagnostics
 
 #ifdef _DEBUG
-void MainFrame::AssertValid() const {CFrameWndEx::AssertValid();}
-
+void MainFrame::AssertValid() const          {CFrameWndEx::AssertValid();}
 void MainFrame::Dump(CDumpContext& dc) const {CFrameWndEx::Dump(dc);}
 #endif //_DEBUG
 

@@ -12,7 +12,7 @@
 #include "MessageBox.h"
 #include "NotePad.h"
 #include "ResourceExtra.h"
-#include "ToolBar.h"
+#include "MyToolBar.h"
 
 
 static TCchar* BkGdTitle    = _T("BkGdEx -- MessageHandler");
