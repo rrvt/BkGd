@@ -27,9 +27,7 @@ public:                                             // Overrides
 
   virtual     ~MainFrame();
 
-  void         setupToolBar();
   MyToolBar&   getToolBar() {return toolBar;}
-
 
 #ifdef _DEBUG
   virtual void AssertValid() const;
@@ -42,7 +40,13 @@ protected:                                          // Generated message map fun
 
   afx_msg int     OnCreate(LPCREATESTRUCT lpCreateStruct);
   afx_msg LRESULT OnResetToolBar(WPARAM wParam, LPARAM lParam);
+
+private:
+
+  void            setupToolBar();
+
 public:
+
   afx_msg void    OnSysCommand(UINT nID, LPARAM lParam);
 
   afx_msg void    OnMove(int x, int y);

@@ -9,7 +9,7 @@
 #include "filename.h"
 #include "GetPathDlg.h"
 #include "IntervalDlg.h"
-#include "MessageBox.h"
+//#include "MessageBox.h"
 #include "NotePad.h"
 #include "ResourceExtra.h"
 #include "MyToolBar.h"
