@@ -91,6 +91,10 @@ The "HTML Help Workshop" (google it) must be installed on the PC.
 
 ## Updates
 
+### Update 6/13/24
+
+Update WinPos.
+
 ### Update 4/17/24 & 4/18/24
 
 Improved the way Toolbars and Window Position and size are handled.
