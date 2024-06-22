@@ -91,6 +91,10 @@ The "HTML Help Workshop" (google it) must be installed on the PC.
 
 ## Updates
 
+### Update 6/22/24
+
+Added an icon to the MIT License rtf file.
+
 ### Update 6/13/24
 
 Update WinPos.

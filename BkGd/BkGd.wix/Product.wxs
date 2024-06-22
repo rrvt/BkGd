@@ -2,63 +2,66 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
 
 <Product Id="*" UpgradeCode="8D8880AE-E847-4148-B89A-0A9DC3339F65" Language="1033"
-         Manufacturer="Bob -- K6RWY" Name="BkGd"
-         Version="!(bind.fileVersion.BkGd.cmp)"
-         >
+                Manufacturer="Bob -- K6RWY" Name="BkGd"
+                Version="!(bind.fileVersion.BkGd.cmp)"
+                >
 
   <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine"
-           Manufacturer="Bob -- K6RWY" Description="Installs BkGd"
-           Comments="Copyright (c) Bob -- K6RWY"
-           />
+                Manufacturer="Bob -- K6RWY" Description="Installs BkGd"
+                Comments="Copyright (c) Bob -- K6RWY"
+                />
 
   <MajorUpgrade Schedule="afterInstallInitialize"
                 AllowDowngrades="no"   IgnoreRemoveFailure="no"   AllowSameVersionUpgrades="no"
-                DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+                DowngradeErrorMessage="A newer version of [ProductName] is already installed."
+                />
 
   <MediaTemplate EmbedCab="yes" />
 
-  <UI Id="My_InstallDir.ui">
-    <UIRef Id="WixUI_InstallDir" />
-    <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="InstallDirDlg">
-      NOT Installed
-    </Publish>
-    <Publish Dialog="InstallDirDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg" Order="2">
-      1
-    </Publish>
-  </UI>
+  <WixVariable Id="WixUILicenseRtf"
+                              Value="$(var.SolutionDir)..\..\Library\License\MITLicenseFile.rtf" />
+  <UI Id="My_InstallDir.ui"><UIRef Id="WixUI_InstallDir" /></UI>
 
   <WixVariable Id="WixUIDialogBmp" Value="C:\Program Files (x86)\WixApp\dialog.bmp"/>
   <WixVariable Id="WixUIBannerBmp" Value="C:\Program Files (x86)\WixApp\banner.bmp"/>
 
   <Icon     Id="BkGd_Icon.exe" SourceFile="$(var.SolutionDir)..\BkGd.prj\res\BkGd.ico"/>
   <Icon     Id="BkGdEx_Startup_App.exe" SourceFile="$(var.SolutionDir)..\BkGdEx.prj\BkGdEx.ico"/>
+  <Icon     Id="MITLicense_Icon.exe"
+                              SourceFile="$(var.SolutionDir)..\..\Library\License\MITLicense.ico"/>
   <Property Id="ARPPRODUCTICON"  Value="BkGd_Icon.exe" />
 
   <Feature Id="ProductFeatures" Title="Main Product" Level="1" >
     <ComponentGroupRef Id="BkGd.ftr"/>
     <ComponentGroupRef Id="BkGdEx.ftr"/>
-    <ComponentGroupRef Id="UninstallBkGd.ftr"/>
+    <ComponentGroupRef Id="MITLicense.ftr"/>
+    <ComponentGroupRef Id="Uninstall_BkGd.ftr"/>
   </Feature>
 </Product>
 
 <Fragment>
-<ComponentGroup Id="BkGd.ftr">
-  <ComponentRef Id="BkGd.cmp"/>
-  <ComponentRef Id="Help.cmp"/>
-</ComponentGroup>
-<ComponentGroup Id="BkGdEx.ftr">
-  <ComponentRef Id="BkGdStartup.exe.cmp"/>
-</ComponentGroup>
-<ComponentGroup Id="UninstallBkGd.ftr">
-  <ComponentRef Id="UninstallBkGd.cmp"/>
-</ComponentGroup>
+  <ComponentGroup Id="BkGd.ftr">
+    <ComponentRef Id="BkGd.cmp"/>
+    <ComponentRef Id="Help.cmp"/>
+  </ComponentGroup>
+  <ComponentGroup Id="BkGdEx.ftr">
+    <ComponentRef Id="BkGdStartup.exe.cmp"/>
+  </ComponentGroup>
+  <ComponentGroup Id="MITLicense.ftr">
+    <ComponentRef Id="MIT_License.cmp"/>
+  </ComponentGroup>
+  <ComponentGroup Id="Uninstall_BkGd.ftr">
+    <ComponentRef Id="Uninstall_BkGd.cmp"/>
+  </ComponentGroup>
 </Fragment>
 
 <!--Directory structure-->
 <Fragment>
   <Directory Id="TARGETDIR" Name="SourceDir">
     <Directory Id="ProgramFilesFolder">
-      <Directory Id="BkGd.pff" Name="BkGd" />
+      <Directory Id="BKGD.PFF" Name="BkGd">
+        <Directory Id="BkGd_License.pff" Name="License" />
+      </Directory>
     </Directory>
 
     <Directory Id="ProgramMenuFolder">
@@ -66,24 +69,24 @@
     </Directory>
 
     <Directory Id="DesktopFolder" />
+
     <Directory Id="StartupFolder" />
   </Directory>
 
   <Property Id="ApplicationFolderName" Value="BkGd" />
-  <Property Id="WIXUI_INSTALLDIR"      Value="BkGd.pff"/>
+  <Property Id="WIXUI_INSTALLDIR"      Value="BKGD.PFF"/>
   <Property Id="WixAppFolder"          Value="WixPerMachineFolder" />
 </Fragment>
 
 <Fragment>
-
-  <Component Id="BkGd.cmp"  Guid="D562BBAC-0860-4B03-AF04-ECF4D7EEEE91" Directory="BkGd.pff">
+  <Component Id="BkGd.cmp" Guid="D562BBAC-0860-4B03-AF04-ECF4D7EEEE91" Directory="BKGD.PFF">
     <File Id="BkGd.cmp" Source="$(var.SolutionDir)..\Release\BkGd.exe" KeyPath="yes"/>
 
     <Shortcut Id               = "BkGd.shc"
               Name             = "BkGd"
               Advertise        = "yes"
               Directory        = "BkGd.pmf"
-              WorkingDirectory = "BkGd.pff"
+              WorkingDirectory = "BKGD.PFF"
               Icon             = "BkGd_Icon.exe"
               />
 
@@ -91,37 +94,51 @@
               Name             = "BkGd"
               Advertise        = "yes"
               Directory        = "DesktopFolder"
-              WorkingDirectory = "BkGd.pff"
+              WorkingDirectory = "BKGD.PFF"
               Icon             = "BkGd_Icon.exe"
               />
   </Component>
 
-  <Component Id="Help.cmp"  Guid="2D9CE8E3-8D85-4616-A83E-21A84CEDDBE7" Directory="BkGd.pff">
+  <Component Id="Help.cmp" Guid="2D9CE8E3-8D85-4616-A83E-21A84CEDDBE7" Directory="BKGD.PFF">
     <File Id="Help.cmp" Source="$(var.SolutionDir)..\Release\BkGd.chm" KeyPath="yes"/>
   </Component>
-
 </Fragment>
 
 <Fragment>
-
-  <Component Id="BkGdStartup.exe.cmp"  Guid="06DEBD18-DE15-4FAC-8748-E250FE918E71"
-                                                                                Directory="BkGd.pff">
+  <Component Id="BkGdStartup.exe.cmp" Guid="06DEBD18-DE15-4FAC-8748-E250FE918E71"
+                                                                              Directory="BKGD.PFF">
     <File Id="BkGdStartup.exe.cmp" Source="$(var.SolutionDir)..\Release\BkGdEx.exe" KeyPath="yes"/>
 
     <Shortcut Id               = "BkGdStartup.exe.stu"
               Name             = "BkGdStartup.exe"
               Advertise        = "yes"
               Directory        = "StartupFolder"
-              WorkingDirectory = "BkGd.pff"
+              WorkingDirectory = "BKGD.PFF"
               Icon             = "BkGdEx_Startup_App.exe"
               />
   </Component>
-
 </Fragment>
 
 <Fragment>
+  <Component Id="MIT_License.cmp" Guid="89EED435-FB30-4D66-A689-16BE3C064A5C"
+                                                                      Directory="BkGd_License.pff">
+    <File Id="MIT_License.cmp"
+                Source="$(var.SolutionDir)..\..\Library\License\MITLicenseFile.rtf" KeyPath="yes"/>
 
-  <Component Id="UninstallBkGd.cmp"  Guid="A5D04F43-D134-4D1F-9899-EF6E5B8B1F2D" Directory="BkGd.pmf">
+    <Shortcut Id               = "MITLicense.shc"
+              Name             = "MIT License"
+              Description      = "MIT License"
+              Advertise        = "yes"
+              Directory        = "BkGd.pmf"
+              WorkingDirectory = "BkGd_License.pff"
+              Icon             = "MITLicense_Icon.exe"
+              />
+  </Component>
+</Fragment>
+
+<Fragment>
+  <Component Id="Uninstall_BkGd.cmp" Guid="7A52F841-0528-4864-B797-1909A2A80DE3"
+                                                                              Directory="BkGd.pmf">
 
     <Shortcut Id               = "UninstallBkGd.shc"
               Name             = "Uninstall BkGd"
@@ -131,10 +148,8 @@
               Icon             = "BkGd_Icon.exe"
               />
     <RemoveFolder Id="BkGd.uni" Directory="BkGd.pmf" On="uninstall"/>
-    <RegistryValue Root="HKCU" Key="Software\UninstallBkGd.cmp" Name="installed"
-                   Type="integer" Value="1" KeyPath="yes"/>
+    <RegistryValue Root="HKCU" Key="Software\Uninstall_BkGd.cmp" Name="installed"
+                                                           Type="integer" Value="1" KeyPath="yes"/>
   </Component>
-
 </Fragment>
-
 </Wix>
