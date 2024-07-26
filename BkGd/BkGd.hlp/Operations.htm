@@ -23,21 +23,41 @@
 This application is composed of two processes:
 <ul>
 <li>BkGd -- The User Interface Process, accepts the commands below and sends them to BkGDEx</li>
-<li>BkGdEx -- The Wallpaper Changer Process, it begins running if enabled at login if enabled if enabled or when BkGd sends a command</li>
+<li>BkGdEx -- The Wallpaper Changer Process, it begins running if enabled at login  or when BkGd sends a command. If not enabled it immediately exits (stops running).</li>
 </ul>
 </p>
 <h2>Tool Bar Commands</h2>
-<h3><img src="Images/Eye.jpg" width="16" height="15"> Get Current &amp; Previous Wallpaper Picture Path</h3>
+<h3><img src="Images/Eye.jpg" width="16" height="15"> Get Current Wallpaper Picture Path</h3>
 <p>
-Displays the path of the current picture used as wallpaper and copies it to the clip board (useful for
-pasting the path into a file manaager or text editor).  The first line is the current picture path and the
-second line is the previous picture path.  A paste operation in a text editor will yield both lines.  
-In Directory Opus the current line is used to find the current picture.
+Displays:
+</p>
+<ul>
+<li>Picture Root Path</li>
+<li>Number of wallpaper files found</li>
+<li>Wallpaper change interval</li>
+<li>Selection mode, random or linear</li>
+<li>Previous wallpaper picture full path</li>
+<li>Current wallpaper picture path</li>
+<li>Array index of current wallpaper picture</li>
+</ul>
+
+<p>
+The current picture used as wallpaper is copied to the clip board (useful for
+pasting the path into a file manaager or text editor).  Both the previous and current 
+picture paths may be selected (mouse to the path and press left mouse button).  Once 
+selected the path will be highlighted.  The a right mouse click will yield a popup
+menu with a copy command that will put the path into the clip board.
+</p>
+<p>
+The Get Current Wallpaper Picture Path is executed when the app is started and thus the 
+current picture path is in the clip board.
 </p>
 
-<h3><img src="Images/Next.jpg" width="16" height="15">Next Wallpaper</h3>
+<h3><img src="Images/Next.jpg" width="16" height="15"> Next Wallpaper</h3>
 <p>
-Display the next wallpaper image.
+If the wallpaper changer is disabled, nothing is done (except for a message buried in the 
+middle of the text in the app window).  If enabled but not running, the wallpaper changer 
+is started.  A message is sent to the wallpaper changer to display the next picture.
 </p>
 
 <h3>
