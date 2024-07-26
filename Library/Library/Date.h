@@ -65,6 +65,7 @@ static const int MinDate;           // Minimum No of Seconds allowed by MFC, Dat
 
   CTimeSpan operator -  (Date& t) {return dt - t.dt;};
   Date&     operator += (CTimeSpan n) {dt += n; return *this;}
+  Date&     operator -= (CTimeSpan n) {dt -= n; return *this;}
   Date      operator +  (CTimeSpan n) {Date d; d.dt = dt; d.dt += n; return d;}
 
   bool      operator == (Date& d) {return dt == d.dt;}

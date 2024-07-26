@@ -41,6 +41,7 @@ MSG    msg;
   hInst = hInstance;                                  // Store instance handle in our global variable
 
   iniFile.getAppDataPath(_T("BkGd"));
+
   if (!iniFile.readInt(Section, EnabledKey, 0)) return 0;
 
   if (!InitInstance(nCmdShow)) return FALSE;          // Perform application initialization:
