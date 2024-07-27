@@ -171,7 +171,7 @@ int    maxHits;
 
   t = r + _T("\r\n") + s;   loadClipBoard(t);//
 
-  notePad << _T("Last Wallpaper Path (and in the Clip Board):") << nTab << s << nCrlf;
+  notePad << _T("Previous Wallpaper Path (and in the Clip Board):") << nTab << s << nCrlf;
   notePad << _T("Current Wallpaper Path (and in the Clip Board):") << nTab << r << nCrlf;
 
   iniFile.read(Section, IndexKey, index);
