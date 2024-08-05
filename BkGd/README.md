@@ -91,6 +91,10 @@ The "HTML Help Workshop" (google it) must be installed on the PC.
 
 ## Updates
 
+### Update 8/4/24
+
+Library update.
+
 ### Update 7/25/24
 
 Update the help file.
