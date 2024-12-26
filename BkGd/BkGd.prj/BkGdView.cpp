@@ -8,7 +8,7 @@
 #include "ClipLine.h"
 #include "OptionsDlg.h"
 #include "Resource.h"
-#include "Resources.h"
+#include "ResourceData.h"
 #include "RptOrientDlgOne.h"
 
 
@@ -79,7 +79,7 @@ void BkGdView::onDisplayOutput() {dspNote.display(*this);}
 // The output streaming functions are very similar to NotePad's streaming functions so it should not
 // be a great hardship to construct a footer.
 
-void BkGdView::printFooter(DevBase& dev, int pageNo) {
+void BkGdView::printFooter(DevStream& dev, int pageNo) {
   switch(doc()->dataSrc()) {
     case NotePadSrc : prtNote.prtFooter(dev, pageNo);  break;
     }

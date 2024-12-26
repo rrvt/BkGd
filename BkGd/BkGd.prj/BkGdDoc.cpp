@@ -5,11 +5,10 @@
 #include "BkGdDoc.h"
 #include "BkGd.h"
 #include "BkGdView.h"
-#include "ClipLine.h"
+#include "ClipBoard.h"
 #include "filename.h"
 #include "GetPathDlg.h"
 #include "IntervalDlg.h"
-//#include "MessageBox.h"
 #include "NotePad.h"
 #include "ResourceExtra.h"
 #include "MyToolBar.h"
@@ -160,16 +159,17 @@ void BkGdDoc::showMode(bool mode) {
 
 
 void BkGdDoc::getCurrent() {
-String r;
-String s;
-String t;
-int    index;
-int    maxHits;
+String    r;
+String    s;
+String    t;
+int       index;
+int       maxHits;
+ClipBoard clipBoard;
 
   iniFile.readString(Section, CurrentKey, r);
   iniFile.readString(Section, LastKey,    s);
 
-  t = r + _T("\r\n") + s;   loadClipBoard(t);//
+  t = r + _T("\r\n") + s;   clipBoard.load(t);
 
   notePad << _T("Previous Wallpaper Path (and in the Clip Board):") << nTab << s << nCrlf;
   notePad << _T("Current Wallpaper Path (and in the Clip Board):") << nTab << r << nCrlf;
@@ -244,7 +244,7 @@ void BkGdDoc::serialize(Archive& ar) {
 
   if (ar.isStoring())
     switch(dataSource) {
-      case NotePadSrc : notePad.archive(ar); return;
+      case NotePadSrc : ar << notePad; return;
       default         : return;
       }
 
